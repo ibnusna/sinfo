@@ -12,18 +12,9 @@ use Illuminate\View\View;
 
 class DocumentController extends Controller
 {
-    public function index(): View
+    public function index()
     {
-        $program = ScfProgram::getActive();
-        $documents = collect();
-
-        if ($program) {
-            $documents = ScfDocument::where('program_id', $program->id)
-                ->latest()
-                ->get();
-        }
-
-        return view('operator.documents', compact('program', 'documents'));
+        return redirect()->route('operator.markdown.index');
     }
 
     public function store(Request $request)

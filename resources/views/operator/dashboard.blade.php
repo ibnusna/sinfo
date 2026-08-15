@@ -4,26 +4,23 @@
 @section('page-title', 'Dashboard Operator')
 
 @section('nav-menu')
-    <a href="{{ route('operator.dashboard') }}" class="nav-link active flex items-center gap-3 px-3 py-3 rounded-xl font-medium transition-colors">
+    <a href="{{ route('operator.dashboard') }}" class="nav-link {{ request()->routeIs('operator.dashboard') ? 'active' : '' }} flex items-center gap-3 px-3 py-3 rounded-xl font-medium transition-colors">
         <i class="ph ph-squares-four text-xl"></i> Dashboard
     </a>
-    <a href="{{ route('operator.assignments.index') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
+    <a href="{{ route('operator.assignments.index') }}" class="nav-link {{ request()->routeIs('operator.assignments.*') ? 'active' : '' }} flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
         <i class="ph ph-users-three text-xl"></i> Manajemen Guru & Juri
     </a>
-    <a href="{{ route('operator.documents.index') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
-        <i class="ph ph-book-open-text text-xl"></i> Juklak & Juknis
+    <a href="{{ route('operator.markdown.index') }}" class="nav-link {{ request()->routeIs('operator.markdown.*') || request()->routeIs('operator.documents.*') ? 'active' : '' }} flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
+        <i class="ph ph-book-open-text text-xl"></i> Panduan Projek (Markdown)
     </a>
-    <a href="{{ route('operator.landing_photos.index') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
+    <a href="{{ route('operator.landing_photos.index') }}" class="nav-link {{ request()->routeIs('operator.landing_photos.*') ? 'active' : '' }} flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
         <i class="ph ph-image text-xl"></i> Foto Landing Page
     </a>
-    <a href="{{ route('operator.markdown.index') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
-        <i class="ph ph-file-md text-xl"></i> Markdown Panduan
-    </a>
-    <a href="{{ route('operator.score_settings.index') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
+    <a href="{{ route('operator.score_settings.index') }}" class="nav-link {{ request()->routeIs('operator.score_settings.*') ? 'active' : '' }} flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
         <i class="ph ph-sliders text-xl"></i> Konfigurasi Penilaian
     </a>
-    <a href="{{ route('panduan.show') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors mt-2">
-        <i class="ph ph-book-bookmark text-xl"></i> Panduan Projek IPA
+    <a href="{{ route('panduan.show') }}" target="_blank" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors mt-2 border-t border-gray-100">
+        <i class="ph ph-eye text-xl text-brand-teal"></i> Lihat Panduan Publik
     </a>
 @endsection
 
@@ -123,13 +120,13 @@
                 <i class="ph ph-users-three text-2xl text-brand-teal"></i>
                 <span class="text-xs font-semibold text-center">Kelola Assignment</span>
             </a>
-            <a href="{{ route('operator.documents.index') }}" class="p-4 border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-brand-teal-light hover:border-brand-teal transition-colors text-gray-700">
+            <a href="{{ route('operator.markdown.index') }}" class="p-4 border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-brand-teal-light hover:border-brand-teal transition-colors text-gray-700">
                 <i class="ph ph-book-open-text text-2xl text-brand-teal"></i>
-                <span class="text-xs font-semibold text-center">Kelola Juklak/Juknis</span>
+                <span class="text-xs font-semibold text-center">Edit Panduan (Markdown)</span>
             </a>
-            <a href="{{ route('operator.assignments.index') }}" class="p-4 border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-brand-teal-light hover:border-brand-teal transition-colors text-gray-700">
-                <i class="ph ph-star text-2xl text-brand-teal"></i>
-                <span class="text-xs font-semibold text-center">Kelola Juri</span>
+            <a href="{{ route('operator.landing_photos.index') }}" class="p-4 border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-brand-teal-light hover:border-brand-teal transition-colors text-gray-700">
+                <i class="ph ph-image text-2xl text-brand-teal"></i>
+                <span class="text-xs font-semibold text-center">Foto Landing Page</span>
             </a>
         </div>
     </div>
