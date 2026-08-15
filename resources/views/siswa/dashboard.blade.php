@@ -4,17 +4,17 @@
 @section('page-title', 'Dashboard Siswa')
 
 @section('nav-menu')
-    <a href="{{ route('siswa.dashboard') }}" class="nav-link active flex items-center gap-3 px-3 py-3 rounded-xl font-medium transition-colors">
+    <a href="{{ route('siswa.dashboard') }}" class="nav-link {{ request()->routeIs('siswa.dashboard') ? 'active' : '' }} flex items-center gap-3 px-3 py-3 rounded-xl font-medium transition-colors">
         <i class="ph ph-squares-four text-xl"></i> Dashboard
     </a>
-    <a href="{{ route('siswa.product_metadata.index') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
+    <a href="{{ route('siswa.product_metadata.index') }}" class="nav-link {{ request()->routeIs('siswa.product_metadata.*') ? 'active' : '' }} flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
         <i class="ph ph-cooking-pot text-xl"></i> Metadata Produk
     </a>
-    <a href="{{ route('siswa.contribution.index') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
+    <a href="{{ route('siswa.contribution.index') }}" class="nav-link {{ request()->routeIs('siswa.contribution.*') ? 'active' : '' }} flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
         <i class="ph ph-users-three text-xl"></i> Kontribusi Anggota
     </a>
-    <a href="{{ route('panduan.show') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors mt-2">
-        <i class="ph ph-book-bookmark text-xl"></i> Panduan Projek IPA
+    <a href="{{ route('panduan.show') }}" target="_blank" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors mt-2 border-t border-gray-100">
+        <i class="ph ph-book-bookmark text-xl text-brand-teal"></i> Panduan Projek IPA
     </a>
 @endsection
 

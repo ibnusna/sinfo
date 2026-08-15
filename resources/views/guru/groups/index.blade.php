@@ -4,14 +4,17 @@
 @section('page-title', 'Manajemen Kelompok')
 
 @section('nav-menu')
-    <a href="{{ route('guru.dashboard') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
+    <a href="{{ route('guru.dashboard') }}" class="nav-link {{ request()->routeIs('guru.dashboard') ? 'active' : '' }} flex items-center gap-3 px-3 py-3 rounded-xl font-medium transition-colors">
         <i class="ph ph-squares-four text-xl"></i> Dashboard
     </a>
-    <a href="{{ route('guru.groups.index') }}" class="nav-link active flex items-center gap-3 px-3 py-3 rounded-xl font-medium transition-colors">
+    <a href="{{ route('guru.groups.index') }}" class="nav-link {{ request()->routeIs('guru.groups.*') ? 'active' : '' }} flex items-center gap-3 px-3 py-3 rounded-xl font-medium transition-colors">
         <i class="ph ph-users text-xl"></i> Manajemen Kelompok
     </a>
-    <a href="{{ route('guru.assessments.index') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
+    <a href="{{ route('guru.assessments.index') }}" class="nav-link {{ request()->routeIs('guru.assessments.*') || request()->routeIs('guru.scores.*') ? 'active' : '' }} flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
         <i class="ph ph-clipboard-text text-xl"></i> Penilaian IPA
+    </a>
+    <a href="{{ route('panduan.show') }}" target="_blank" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors mt-2 border-t border-gray-100">
+        <i class="ph ph-book-bookmark text-xl text-brand-teal"></i> Panduan Projek IPA
     </a>
 @endsection
 

@@ -67,7 +67,7 @@
 
             {{-- Navigation --}}
             <div class="flex-1 overflow-y-auto py-6 px-4 no-scrollbar space-y-1">
-                @yield('nav-menu')
+                @include('layouts.sidebar_menu')
             </div>
 
             {{-- User Info + Logout --}}
