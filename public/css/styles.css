@@ -1,0 +1,255 @@
+/* -------------------------------------------------------------------------- */
+/* Science Food Festival - Modern Design System & Motion System               */
+/* Apple, Linear & Framer Inspired Aesthetics                                 */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  --color-primary: #11998E;
+  --color-primary-dark: #0B6E64;
+  --color-primary-light: #CCFBF1;
+  --color-accent: #FFC145;
+  --color-accent-hover: #EAB308;
+  --color-dark: #1F2937;
+  --color-dark-subtle: #2E2E2E;
+  --color-light: #F9FAFB;
+  --color-white: #FFFFFF;
+
+  --shadow-sm: 0 2px 8px -2px rgba(17, 153, 142, 0.08);
+  --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 2px 6px -2px rgba(0, 0, 0, 0.02);
+  --shadow-soft: 0 20px 40px -15px rgba(17, 153, 142, 0.18);
+  --shadow-glow: 0 0 25px rgba(17, 153, 142, 0.35);
+  
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+
+  --ease-out-apple: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Fluid Typography & Foundation                                              */
+/* -------------------------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.text-fluid-h1 {
+  font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem);
+  line-height: 1.08;
+}
+
+.text-fluid-h2 {
+  font-size: clamp(1.875rem, 3.5vw + 0.8rem, 3rem);
+  line-height: 1.15;
+}
+
+.text-fluid-h3 {
+  font-size: clamp(1.25rem, 2vw + 0.5rem, 1.75rem);
+  line-height: 1.25;
+}
+
+.text-fluid-p {
+  font-size: clamp(1rem, 1vw + 0.5rem, 1.125rem);
+  line-height: 1.6;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Background Grid & Glassmorphism                                            */
+/* -------------------------------------------------------------------------- */
+.bg-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(17, 153, 142, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17, 153, 142, 0.04) 1px, transparent 1px);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.glass-dark {
+  background: rgba(31, 41, 55, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.blob-shape {
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  animation: morph 9s ease-in-out infinite;
+}
+
+@keyframes morph {
+  0%, 100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+  34% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; }
+  67% { border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%; }
+}
+
+/* Hide scrollbar helper */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Smart Skeleton Loading & Shimmer Animation                                 */
+/* -------------------------------------------------------------------------- */
+.skeleton-container {
+  position: relative;
+  overflow: hidden;
+  background-color: #E2E8F0;
+  border-radius: var(--radius-2xl);
+}
+
+.skeleton-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 1.6s infinite ease-in-out;
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.skeleton-container.loaded .skeleton-shimmer {
+  opacity: 0;
+}
+
+/* Image transitions for smooth load */
+.img-smart {
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.6s var(--ease-out-apple), transform 0.6s var(--ease-out-apple);
+  will-change: opacity, transform;
+}
+
+.img-smart.loaded, .img-priority {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Global Motion System (Scroll Reveal & Parallax)                            */
+/* -------------------------------------------------------------------------- */
+.fade-up {
+  opacity: 0;
+  transform: translateY(35px);
+  filter: blur(4px);
+  transition: transform 0.8s var(--ease-out-apple), opacity 0.8s var(--ease-out-apple), filter 0.8s ease;
+  will-change: transform, opacity, filter;
+}
+
+.fade-down {
+  opacity: 0;
+  transform: translateY(-35px);
+  filter: blur(4px);
+  transition: transform 0.8s var(--ease-out-apple), opacity 0.8s var(--ease-out-apple), filter 0.8s ease;
+  will-change: transform, opacity, filter;
+}
+
+.fade-left {
+  opacity: 0;
+  transform: translateX(40px);
+  filter: blur(4px);
+  transition: transform 0.8s var(--ease-out-apple), opacity 0.8s var(--ease-out-apple), filter 0.8s ease;
+  will-change: transform, opacity, filter;
+}
+
+.fade-right {
+  opacity: 0;
+  transform: translateX(-40px);
+  filter: blur(4px);
+  transition: transform 0.8s var(--ease-out-apple), opacity 0.8s var(--ease-out-apple), filter 0.8s ease;
+  will-change: transform, opacity, filter;
+}
+
+.zoom-in {
+  opacity: 0;
+  transform: scale(0.92) translateY(20px);
+  filter: blur(4px);
+  transition: transform 0.8s var(--ease-out-apple), opacity 0.8s var(--ease-out-apple), filter 0.8s ease;
+  will-change: transform, opacity, filter;
+}
+
+.blur-in {
+  opacity: 0;
+  filter: blur(12px);
+  transition: opacity 0.9s var(--ease-out-apple), filter 0.9s var(--ease-out-apple);
+  will-change: opacity, filter;
+}
+
+/* Revealed active state */
+.is-visible {
+  opacity: 1 !important;
+  transform: translate(0, 0) scale(1) !important;
+  filter: blur(0) !important;
+}
+
+/* Parallax element smoothing */
+.parallax-element {
+  will-change: transform;
+  transition: transform 0.1s var(--ease-in-out-smooth);
+}
+
+/* Gallery hover & zoom effects */
+.gallery-card {
+  transition: transform 0.6s var(--ease-out-apple), box-shadow 0.6s var(--ease-out-apple);
+}
+
+.gallery-card:hover {
+  box-shadow: 0 20px 40px -10px rgba(17, 153, 142, 0.25);
+}
+
+.gallery-img {
+  transition: transform 0.7s var(--ease-out-apple);
+}
+
+.gallery-card:hover .gallery-img {
+  transform: scale(1.08);
+}
+
+/* CTA Glow Button */
+.btn-cta-primary {
+  transition: transform 0.3s var(--ease-out-apple), box-shadow 0.3s var(--ease-out-apple), background-color 0.3s ease;
+}
+
+.btn-cta-primary:hover {
+  transform: scale(1.04) translateY(-2px);
+  box-shadow: 0 12px 30px -4px rgba(17, 153, 142, 0.45);
+}
+
+/* Responsive Accordion details transition */
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] summary .caret-icon {
+  transform: rotate(180deg);
+}
+
+.caret-icon {
+  transition: transform 0.3s var(--ease-out-apple);
+}

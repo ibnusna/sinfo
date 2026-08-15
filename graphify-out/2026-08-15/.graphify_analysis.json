@@ -1,0 +1,690 @@
+{
+  "communities": {
+    "0": [
+      "composer",
+      "composer_allow_plugins_pestphp_pest_plugin",
+      "composer_allow_plugins_php_http_discovery",
+      "composer_autoload",
+      "composer_autoload_dev",
+      "composer_autoload_dev_psr_4",
+      "composer_autoload_psr_4",
+      "composer_config",
+      "composer_config_allow_plugins",
+      "composer_config_optimize_autoloader",
+      "composer_config_platform",
+      "composer_config_preferred_install",
+      "composer_config_sort_packages",
+      "composer_description",
+      "composer_extra",
+      "composer_extra_laravel",
+      "composer_keywords",
+      "composer_laravel_dont_discover",
+      "composer_license",
+      "composer_minimum_stability",
+      "composer_name",
+      "composer_platform_php",
+      "composer_prefer_stable",
+      "composer_psr_4_app",
+      "composer_psr_4_database_factories",
+      "composer_psr_4_database_seeders",
+      "composer_psr_4_tests",
+      "composer_require",
+      "composer_require_dev",
+      "composer_require_dev_fakerphp_faker",
+      "composer_require_dev_laravel_pail",
+      "composer_require_dev_laravel_pao",
+      "composer_require_dev_laravel_pint",
+      "composer_require_dev_mockery_mockery",
+      "composer_require_dev_nunomaduro_collision",
+      "composer_require_dev_phpunit_phpunit",
+      "composer_require_laravel_framework",
+      "composer_require_laravel_tinker",
+      "composer_require_php",
+      "composer_schema",
+      "composer_type",
+      "ref_framework",
+      "ref_laravel"
+    ],
+    "1": [
+      "app_http_controllers_auth_logincontroller",
+      "app_http_controllers_auth_logincontroller_logincontroller",
+      "app_http_controllers_auth_logincontroller_logincontroller_login",
+      "app_http_controllers_auth_logincontroller_logincontroller_redirecttoroledashboard",
+      "app_http_controllers_auth_logincontroller_logincontroller_showlogin",
+      "app_http_controllers_auth_logoutcontroller",
+      "app_http_controllers_auth_logoutcontroller_logoutcontroller",
+      "app_http_controllers_auth_logoutcontroller_logoutcontroller_logout",
+      "app_http_controllers_controller",
+      "app_http_controllers_controller_controller",
+      "app_http_controllers_guru_assessmentcontroller",
+      "app_http_controllers_guru_dashboardcontroller",
+      "app_http_controllers_guru_dashboardcontroller_dashboardcontroller",
+      "app_http_controllers_guru_groupcontroller",
+      "app_http_controllers_juri_assessmentcontroller",
+      "app_http_controllers_juri_dashboardcontroller",
+      "app_http_controllers_juri_dashboardcontroller_dashboardcontroller",
+      "app_http_controllers_kepsekcontroller",
+      "app_http_controllers_kepsekcontroller_kepsekcontroller",
+      "app_http_controllers_operator_assignmentcontroller",
+      "app_http_controllers_operator_dashboardcontroller",
+      "app_http_controllers_operator_documentcontroller",
+      "app_http_controllers_siswa_dashboardcontroller",
+      "app_http_controllers_siswa_dashboardcontroller_dashboardcontroller",
+      "app_http_controllers_siswa_postercontroller",
+      "app_http_controllers_siswa_postercontroller_postercontroller",
+      "app_models_scfactivitylog",
+      "app_models_scfassessment",
+      "app_models_scfassignment",
+      "app_models_scfdocument",
+      "app_models_scfgroup",
+      "app_models_scfgroupmember",
+      "app_models_scfposter",
+      "app_models_scfprogram",
+      "app_models_scfsetting",
+      "app_models_user",
+      "config_auth",
+      "database_seeders_scfseeder",
+      "illuminate_http_redirectresponse",
+      "illuminate_http_request",
+      "illuminate_view_view",
+      "routes_web"
+    ],
+    "2": [
+      "app_http_controllers_operator_assignmentcontroller_assignmentcontroller",
+      "app_http_controllers_operator_assignmentcontroller_assignmentcontroller_destroy",
+      "app_http_controllers_operator_assignmentcontroller_assignmentcontroller_index",
+      "app_http_controllers_operator_assignmentcontroller_assignmentcontroller_store",
+      "app_http_controllers_operator_dashboardcontroller_dashboardcontroller",
+      "app_http_controllers_operator_dashboardcontroller_dashboardcontroller_index",
+      "app_http_controllers_operator_dashboardcontroller_dashboardcontroller_togglesystem",
+      "app_models_scfactivitylog_scfactivitylog",
+      "app_models_scfactivitylog_scfactivitylog_getuser",
+      "app_models_scfactivitylog_scfactivitylog_log",
+      "app_models_scfactivitylog_scfactivitylog_program",
+      "app_models_scfassignment_scfassignment",
+      "app_models_scfassignment_scfassignment_getuser",
+      "app_models_scfassignment_scfassignment_program",
+      "app_models_scfgroup_scfgroup_getcreator",
+      "app_models_scfgroup_scfgroup_getleader",
+      "app_models_scfgroup_scfgroup_poster",
+      "app_models_scfprogram_scfprogram_settings",
+      "app_models_user_user",
+      "app_models_user_user_getauthpassword",
+      "app_models_user_user_getdisplayname",
+      "app_models_user_user_getremembertoken",
+      "app_models_user_user_getremembertokenname",
+      "app_models_user_user_getrolename",
+      "app_models_user_user_getscfrole",
+      "app_models_user_user_guru",
+      "app_models_user_user_isactive",
+      "app_models_user_user_role",
+      "app_models_user_user_setremembertoken",
+      "app_models_user_user_siswa",
+      "database_seeders_databaseseeder",
+      "database_seeders_databaseseeder_databaseseeder",
+      "database_seeders_databaseseeder_databaseseeder_run",
+      "database_seeders_scfseeder_scfseeder",
+      "database_seeders_scfseeder_scfseeder_run",
+      "illuminate_database_console_seeds_withoutmodelevents",
+      "illuminate_database_eloquent_relations_hasone",
+      "illuminate_database_seeder",
+      "illuminate_foundation_auth_user",
+      "illuminate_notifications_notifiable"
+    ],
+    "3": [
+      "app_http_controllers_guru_dashboardcontroller_dashboardcontroller_index",
+      "app_http_controllers_siswa_dashboardcontroller_dashboardcontroller_index",
+      "app_http_controllers_siswa_postercontroller_postercontroller_upload",
+      "app_models_guru",
+      "app_models_guru_guru",
+      "app_models_guru_guru_user",
+      "app_models_kelas",
+      "app_models_kelas_kelas",
+      "app_models_role",
+      "app_models_role_role",
+      "app_models_scfassessmentdetail",
+      "app_models_scfassessmentdetail_scfassessmentdetail",
+      "app_models_scfassessmentdetail_scfassessmentdetail_assessment",
+      "app_models_scfdocument_scfdocument_program",
+      "app_models_scfgroup_scfgroup_program",
+      "app_models_scfgroupmember_scfgroupmember",
+      "app_models_scfgroupmember_scfgroupmember_getsiswadetail",
+      "app_models_scfgroupmember_scfgroupmember_getstudent",
+      "app_models_scfgroupmember_scfgroupmember_group",
+      "app_models_scfposter_scfposter",
+      "app_models_scfposter_scfposter_getfilesizeformatted",
+      "app_models_scfposter_scfposter_getpublicurl",
+      "app_models_scfposter_scfposter_getuploader",
+      "app_models_scfposter_scfposter_group",
+      "app_models_scfposter_scfposter_isimage",
+      "app_models_scfposter_scfposter_ispdf",
+      "app_models_scfposter_scfposter_program",
+      "app_models_siswa",
+      "app_models_siswa_siswa",
+      "app_models_siswa_siswa_kelas",
+      "app_models_siswa_siswa_user",
+      "illuminate_database_eloquent_model",
+      "illuminate_database_eloquent_relations_belongsto"
+    ],
+    "4": [
+      "app_http_controllers_guru_assessmentcontroller_assessmentcontroller",
+      "app_http_controllers_guru_assessmentcontroller_assessmentcontroller_index",
+      "app_http_controllers_guru_assessmentcontroller_assessmentcontroller_store",
+      "app_http_controllers_guru_groupcontroller_groupcontroller",
+      "app_http_controllers_guru_groupcontroller_groupcontroller_destroy",
+      "app_http_controllers_guru_groupcontroller_groupcontroller_index",
+      "app_http_controllers_guru_groupcontroller_groupcontroller_store",
+      "app_http_controllers_juri_assessmentcontroller_assessmentcontroller",
+      "app_http_controllers_juri_assessmentcontroller_assessmentcontroller_index",
+      "app_http_controllers_juri_assessmentcontroller_assessmentcontroller_show",
+      "app_http_controllers_juri_assessmentcontroller_assessmentcontroller_store",
+      "app_http_controllers_kepsekcontroller_kepsekcontroller_dashboard",
+      "app_models_scfassessment_scfassessment",
+      "app_models_scfassessment_scfassessment_details",
+      "app_models_scfassessment_scfassessment_getassessor",
+      "app_models_scfassessment_scfassessment_getaveragescore",
+      "app_models_scfassessment_scfassessment_gettotalscore",
+      "app_models_scfassessment_scfassessment_group",
+      "app_models_scfassessment_scfassessment_issubmitted",
+      "app_models_scfassessment_scfassessment_program",
+      "app_models_scfgroup_scfgroup",
+      "app_models_scfgroup_scfgroup_assessments",
+      "app_models_scfgroup_scfgroup_isleader",
+      "app_models_scfgroup_scfgroup_members",
+      "app_models_scfprogram_scfprogram",
+      "app_models_scfprogram_scfprogram_assignments",
+      "app_models_scfprogram_scfprogram_documents",
+      "app_models_scfprogram_scfprogram_groups",
+      "app_models_scfprogram_scfprogram_posters",
+      "illuminate_database_eloquent_relations_hasmany"
+    ],
+    "5": [
+      "composer_scripts",
+      "composer_scripts_dev",
+      "composer_scripts_post_autoload_dump",
+      "composer_scripts_post_create_project_cmd",
+      "composer_scripts_post_root_package_install",
+      "composer_scripts_post_update_cmd",
+      "composer_scripts_pre_package_uninstall",
+      "composer_scripts_setup",
+      "composer_scripts_test",
+      "ref_composer_config_disableprocesstimeout",
+      "ref_composer_install",
+      "ref_illuminate_foundation_composerscripts_postautoloaddump",
+      "ref_illuminate_foundation_composerscripts_prepackageuninstall",
+      "ref_npm_install_ignore_scripts",
+      "ref_npm_run_build",
+      "ref_npx_concurrently_c_93c5fd_c4b5fd_fb7185_fdba74_php_artisan_serve_php_artisan_queue_listen_tries_1_timeout_0_php_artisan_pail_timeout_0_npm_run_dev_names_server_queue_logs_vite_kill_others",
+      "ref_php_artisan_config_clear_ansi_no_additional_args",
+      "ref_php_artisan_key_generate",
+      "ref_php_artisan_key_generate_ansi",
+      "ref_php_artisan_migrate_force",
+      "ref_php_artisan_migrate_graceful_ansi",
+      "ref_php_artisan_package_discover_ansi",
+      "ref_php_artisan_test",
+      "ref_php_artisan_vendor_publish_tag_laravel_assets_ansi_force",
+      "ref_php_r_file_exists_database_database_sqlite_touch_database_database_sqlite",
+      "ref_php_r_file_exists_env_copy_env_example_env"
+    ],
+    "6": [
+      "concurrently",
+      "laravel_vite_plugin",
+      "package",
+      "package_devdependencies",
+      "package_devdependencies_concurrently",
+      "package_devdependencies_laravel_vite_plugin",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_tailwindcss_vite",
+      "package_devdependencies_vite",
+      "package_private",
+      "package_schema",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_type",
+      "tailwindcss",
+      "tailwindcss_vite",
+      "vite"
+    ],
+    "7": [
+      "app_http_controllers_juri_dashboardcontroller_dashboardcontroller_index",
+      "app_models_scfprogram_scfprogram_getactive",
+      "app_models_scfsetting_scfsetting",
+      "app_models_scfsetting_scfsetting_getsystemstatus",
+      "app_models_scfsetting_scfsetting_getvalue",
+      "app_models_scfsetting_scfsetting_program",
+      "app_models_scfsetting_scfsetting_setsystemstatus",
+      "database_factories_userfactory",
+      "database_factories_userfactory_userfactory",
+      "database_factories_userfactory_userfactory_definition",
+      "database_factories_userfactory_userfactory_unverified",
+      "illuminate_database_eloquent_factories_factory",
+      "self",
+      "static"
+    ],
+    "8": [
+      "public_foto_gallery_1_jpg",
+      "public_foto_gallery_2_jpg",
+      "public_foto_gallery_3_jpg",
+      "public_foto_gallery_4_jpg",
+      "public_foto_gallery_5_jpg",
+      "science_food_festival_concept",
+      "sinfo_app_shell",
+      "sinfo_assessment_modal",
+      "sinfo_db",
+      "sinfo_login_view",
+      "sinfo_prototype_html"
+    ],
+    "9": [
+      "app_http_controllers_operator_documentcontroller_documentcontroller",
+      "app_http_controllers_operator_documentcontroller_documentcontroller_destroy",
+      "app_http_controllers_operator_documentcontroller_documentcontroller_index",
+      "app_http_controllers_operator_documentcontroller_documentcontroller_publish",
+      "app_http_controllers_operator_documentcontroller_documentcontroller_store",
+      "app_http_controllers_operator_documentcontroller_documentcontroller_update",
+      "app_models_scfdocument_scfdocument",
+      "app_models_scfdocument_scfdocument_getcreator",
+      "app_models_scfdocument_scfdocument_ispublished"
+    ],
+    "10": [
+      "app_http_middleware_rolemiddleware",
+      "app_http_middleware_rolemiddleware_rolemiddleware",
+      "app_http_middleware_rolemiddleware_rolemiddleware_handle",
+      "app_http_middleware_rolemiddleware_rolemiddleware_redirecttodashboard",
+      "app_http_middleware_systemopenmiddleware",
+      "app_http_middleware_systemopenmiddleware_systemopenmiddleware",
+      "app_http_middleware_systemopenmiddleware_systemopenmiddleware_handle",
+      "closure",
+      "symfony_component_httpfoundation_response"
+    ],
+    "11": [
+      "app_providers_appserviceprovider",
+      "app_providers_appserviceprovider_appserviceprovider",
+      "app_providers_appserviceprovider_appserviceprovider_boot",
+      "app_providers_appserviceprovider_appserviceprovider_register",
+      "bootstrap_providers",
+      "illuminate_support_serviceprovider"
+    ],
+    "12": [
+      "illuminate_foundation_testing_testcase",
+      "tests_feature_exampletest",
+      "tests_feature_exampletest_exampletest",
+      "tests_feature_exampletest_exampletest_test_the_application_returns_a_successful_response",
+      "tests_testcase",
+      "tests_testcase_testcase"
+    ],
+    "13": [
+      "phpunit_framework_testcase",
+      "tests_unit_exampletest",
+      "tests_unit_exampletest_exampletest",
+      "tests_unit_exampletest_exampletest_test_that_true_is_true"
+    ],
+    "14": [
+      "public_js_motion",
+      "public_js_motion_initnavbarscrolleffect",
+      "public_js_motion_initparallaxengine",
+      "public_js_motion_initscrollreveal"
+    ],
+    "15": [
+      "database_migrations_0001_01_01_000000_create_users_table",
+      "database_migrations_0001_01_01_000000_create_users_table_down",
+      "database_migrations_0001_01_01_000000_create_users_table_up"
+    ],
+    "16": [
+      "database_migrations_0001_01_01_000001_create_cache_table",
+      "database_migrations_0001_01_01_000001_create_cache_table_down",
+      "database_migrations_0001_01_01_000001_create_cache_table_up"
+    ],
+    "17": [
+      "database_migrations_0001_01_01_000002_create_jobs_table",
+      "database_migrations_0001_01_01_000002_create_jobs_table_down",
+      "database_migrations_0001_01_01_000002_create_jobs_table_up"
+    ],
+    "18": [
+      "database_migrations_2026_08_14_000001_create_scf_programs_table",
+      "database_migrations_2026_08_14_000001_create_scf_programs_table_down",
+      "database_migrations_2026_08_14_000001_create_scf_programs_table_up"
+    ],
+    "19": [
+      "database_migrations_2026_08_14_000002_create_scf_settings_table",
+      "database_migrations_2026_08_14_000002_create_scf_settings_table_down",
+      "database_migrations_2026_08_14_000002_create_scf_settings_table_up"
+    ],
+    "20": [
+      "database_migrations_2026_08_14_000003_create_scf_assignments_table",
+      "database_migrations_2026_08_14_000003_create_scf_assignments_table_down",
+      "database_migrations_2026_08_14_000003_create_scf_assignments_table_up"
+    ],
+    "21": [
+      "database_migrations_2026_08_14_000004_create_scf_documents_table",
+      "database_migrations_2026_08_14_000004_create_scf_documents_table_down",
+      "database_migrations_2026_08_14_000004_create_scf_documents_table_up"
+    ],
+    "22": [
+      "database_migrations_2026_08_14_000005_create_scf_groups_table",
+      "database_migrations_2026_08_14_000005_create_scf_groups_table_down",
+      "database_migrations_2026_08_14_000005_create_scf_groups_table_up"
+    ],
+    "23": [
+      "database_migrations_2026_08_14_000006_create_scf_group_members_table",
+      "database_migrations_2026_08_14_000006_create_scf_group_members_table_down",
+      "database_migrations_2026_08_14_000006_create_scf_group_members_table_up"
+    ],
+    "24": [
+      "database_migrations_2026_08_14_000007_create_scf_posters_table",
+      "database_migrations_2026_08_14_000007_create_scf_posters_table_down",
+      "database_migrations_2026_08_14_000007_create_scf_posters_table_up"
+    ],
+    "25": [
+      "database_migrations_2026_08_14_000008_create_scf_assessments_table",
+      "database_migrations_2026_08_14_000008_create_scf_assessments_table_down",
+      "database_migrations_2026_08_14_000008_create_scf_assessments_table_up"
+    ],
+    "26": [
+      "database_migrations_2026_08_14_000009_create_scf_assessment_details_table",
+      "database_migrations_2026_08_14_000009_create_scf_assessment_details_table_down",
+      "database_migrations_2026_08_14_000009_create_scf_assessment_details_table_up"
+    ],
+    "27": [
+      "database_migrations_2026_08_14_000010_create_scf_activity_logs_table",
+      "database_migrations_2026_08_14_000010_create_scf_activity_logs_table_down",
+      "database_migrations_2026_08_14_000010_create_scf_activity_logs_table_up"
+    ],
+    "28": [
+      "public_js_gallery",
+      "public_js_gallery_initgalleryfilters",
+      "public_js_gallery_initsmartgallery"
+    ],
+    "29": [
+      "artisan",
+      "routes_console"
+    ],
+    "30": [
+      "public_js_academic_year",
+      "public_js_academic_year_getacademicyear"
+    ],
+    "31": [
+      "readme_laravel",
+      "readme_laravel_boost"
+    ],
+    "32": [
+      "bootstrap_app"
+    ],
+    "33": [
+      "config_app"
+    ],
+    "34": [
+      "config_cache"
+    ],
+    "35": [
+      "config_database"
+    ],
+    "36": [
+      "config_filesystems"
+    ],
+    "37": [
+      "config_logging"
+    ],
+    "38": [
+      "config_mail"
+    ],
+    "39": [
+      "config_queue"
+    ],
+    "40": [
+      "config_services"
+    ],
+    "41": [
+      "config_session"
+    ],
+    "42": [
+      "public_foto_about_jpg"
+    ],
+    "43": [
+      "public_foto_hero_jpg"
+    ],
+    "44": [
+      "public_foto_logo_svg"
+    ],
+    "45": [
+      "public_foto_textlogo_svg"
+    ],
+    "46": [
+      "public_index"
+    ],
+    "47": [
+      "public_robots_txt"
+    ],
+    "48": [
+      "resources_js_app"
+    ],
+    "49": [
+      "resources_views_auth_login_blade"
+    ],
+    "50": [
+      "resources_views_guru_assessments_index_blade"
+    ],
+    "51": [
+      "resources_views_guru_dashboard_blade"
+    ],
+    "52": [
+      "resources_views_guru_groups_index_blade"
+    ],
+    "53": [
+      "resources_views_juri_assessments_index_blade"
+    ],
+    "54": [
+      "resources_views_juri_assessments_show_blade"
+    ],
+    "55": [
+      "resources_views_juri_dashboard_blade"
+    ],
+    "56": [
+      "resources_views_kepsek_dashboard_blade"
+    ],
+    "57": [
+      "resources_views_landing_blade"
+    ],
+    "58": [
+      "resources_views_layouts_app_blade"
+    ],
+    "59": [
+      "resources_views_operator_assignments_blade"
+    ],
+    "60": [
+      "resources_views_operator_dashboard_blade"
+    ],
+    "61": [
+      "resources_views_operator_documents_blade"
+    ],
+    "62": [
+      "resources_views_siswa_dashboard_blade"
+    ],
+    "63": [
+      "resources_views_welcome_blade"
+    ],
+    "64": [
+      "vite_config"
+    ]
+  },
+  "cohesion": {
+    "0": 0.046511627906976744,
+    "1": 0.16608594657375145,
+    "2": 0.06794871794871794,
+    "3": 0.09090909090909091,
+    "4": 0.12183908045977011,
+    "5": 0.08,
+    "6": 0.1111111111111111,
+    "7": 0.18681318681318682,
+    "8": 0.18181818181818182,
+    "9": 0.3611111111111111,
+    "10": 0.4166666666666667,
+    "11": 0.4,
+    "12": 0.4,
+    "13": 0.6666666666666666,
+    "14": 0.5,
+    "15": 0.6666666666666666,
+    "16": 0.6666666666666666,
+    "17": 0.6666666666666666,
+    "18": 0.6666666666666666,
+    "19": 0.6666666666666666,
+    "20": 0.6666666666666666,
+    "21": 0.6666666666666666,
+    "22": 0.6666666666666666,
+    "23": 0.6666666666666666,
+    "24": 0.6666666666666666,
+    "25": 0.6666666666666666,
+    "26": 0.6666666666666666,
+    "27": 0.6666666666666666,
+    "28": 0.6666666666666666,
+    "29": 1.0,
+    "30": 1.0,
+    "31": 1.0,
+    "32": 1.0,
+    "33": 1.0,
+    "34": 1.0,
+    "35": 1.0,
+    "36": 1.0,
+    "37": 1.0,
+    "38": 1.0,
+    "39": 1.0,
+    "40": 1.0,
+    "41": 1.0,
+    "42": 1.0,
+    "43": 1.0,
+    "44": 1.0,
+    "45": 1.0,
+    "46": 1.0,
+    "47": 1.0,
+    "48": 1.0,
+    "49": 1.0,
+    "50": 1.0,
+    "51": 1.0,
+    "52": 1.0,
+    "53": 1.0,
+    "54": 1.0,
+    "55": 1.0,
+    "56": 1.0,
+    "57": 1.0,
+    "58": 1.0,
+    "59": 1.0,
+    "60": 1.0,
+    "61": 1.0,
+    "62": 1.0,
+    "63": 1.0,
+    "64": 1.0
+  },
+  "gods": [
+    {
+      "id": "app_models_scfprogram_scfprogram",
+      "label": "ScfProgram",
+      "degree": 30
+    },
+    {
+      "id": "app_models_user_user",
+      "label": "User",
+      "degree": 28
+    },
+    {
+      "id": "app_http_controllers_controller_controller",
+      "label": "Controller",
+      "degree": 26
+    },
+    {
+      "id": "app_models_scfgroup_scfgroup",
+      "label": "ScfGroup",
+      "degree": 21
+    },
+    {
+      "id": "app_models_scfassessment_scfassessment",
+      "label": "ScfAssessment",
+      "degree": 17
+    },
+    {
+      "id": "app_models_scfactivitylog_scfactivitylog",
+      "label": "ScfActivityLog",
+      "degree": 15
+    },
+    {
+      "id": "app_models_scfsetting_scfsetting",
+      "label": "ScfSetting",
+      "degree": 14
+    },
+    {
+      "id": "app_models_scfdocument_scfdocument",
+      "label": "ScfDocument",
+      "degree": 12
+    },
+    {
+      "id": "app_models_scfposter_scfposter",
+      "label": "ScfPoster",
+      "degree": 12
+    },
+    {
+      "id": "app_models_scfassignment_scfassignment",
+      "label": "ScfAssignment",
+      "degree": 9
+    }
+  ],
+  "surprises": [
+    {
+      "source": "Gallery Image 1 - Food Presentation",
+      "target": "Science Food Festival (SFF)",
+      "source_files": [
+        "public/foto/gallery-1.jpg",
+        "sinfo_prototype.html"
+      ],
+      "confidence": "INFERRED",
+      "relation": "conceptually_related_to",
+      "why": "inferred connection - not explicitly stated in source; crosses file types (image \u2194 doc); connects across different repos/directories; peripheral node `Gallery Image 1 - Food Presentation` unexpectedly reaches hub `Science Food Festival (SFF)`"
+    },
+    {
+      "source": "Gallery Image 2 - Students with Food",
+      "target": "Science Food Festival (SFF)",
+      "source_files": [
+        "public/foto/gallery-2.jpg",
+        "sinfo_prototype.html"
+      ],
+      "confidence": "INFERRED",
+      "relation": "conceptually_related_to",
+      "why": "inferred connection - not explicitly stated in source; crosses file types (image \u2194 doc); connects across different repos/directories; peripheral node `Gallery Image 2 - Students with Food` unexpectedly reaches hub `Science Food Festival (SFF)`"
+    },
+    {
+      "source": "Gallery Image 4 - Group Presentation",
+      "target": "Science Food Festival (SFF)",
+      "source_files": [
+        "public/foto/gallery-4.jpg",
+        "sinfo_prototype.html"
+      ],
+      "confidence": "INFERRED",
+      "relation": "conceptually_related_to",
+      "why": "inferred connection - not explicitly stated in source; crosses file types (image \u2194 doc); connects across different repos/directories; peripheral node `Gallery Image 4 - Group Presentation` unexpectedly reaches hub `Science Food Festival (SFF)`"
+    },
+    {
+      "source": "Gallery Image 5 - Group Photo",
+      "target": "Science Food Festival (SFF)",
+      "source_files": [
+        "public/foto/gallery-5.jpg",
+        "sinfo_prototype.html"
+      ],
+      "confidence": "INFERRED",
+      "relation": "conceptually_related_to",
+      "why": "inferred connection - not explicitly stated in source; crosses file types (image \u2194 doc); connects across different repos/directories; peripheral node `Gallery Image 5 - Group Photo` unexpectedly reaches hub `Science Food Festival (SFF)`"
+    },
+    {
+      "source": "Gallery Image 3 - Assessment Process",
+      "target": "SINFO Assessment Modal",
+      "source_files": [
+        "public/foto/gallery-3.jpg",
+        "sinfo_prototype.html"
+      ],
+      "confidence": "INFERRED",
+      "relation": "conceptually_related_to",
+      "why": "inferred connection - not explicitly stated in source; crosses file types (doc \u2194 image); connects across different repos/directories"
+    }
+  ],
+  "tokens": {
+    "input": 42748,
+    "output": 1259
+  }
+}

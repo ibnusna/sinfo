@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SINFO - Science Food Festival</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons (Phosphor Icons - consistent with LP) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Poppins', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            teal: '#0d9488',
+                            'teal-dark': '#0f766e',
+                            'teal-light': '#ccfbf1',
+                            yellow: '#facc15',
+                            dark: '#1f2937',
+                            light: '#f9fafb',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(13, 148, 136, 0.1)',
+                        'card': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles & Animations */
+        body { background-color: #f3f4f6; overflow-x: hidden; }
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        .slide-up { animation: slideUp 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Hide scrollbar for clean UI */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Glassmorphism */
+        .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="text-gray-800 antialiased h-screen flex overflow-hidden selection:bg-brand-teal selection:text-white">
+
+    <!-- ========================================== -->
+    <!-- 1. LOGIN VIEW -->
+    <!-- ========================================== -->
+    <div id="login-view" class="fixed inset-0 z-50 flex items-center justify-center bg-brand-light">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-teal-light rounded-full blur-[100px] opacity-50 -z-10"></div>
+        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-yellow-100 rounded-full blur-[80px] opacity-50 -z-10"></div>
+
+        <div class="bg-white p-10 rounded-3xl shadow-soft w-full max-w-md mx-4 slide-up border border-gray-100 relative overflow-hidden">
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-brand-teal rounded-2xl flex items-center justify-center text-white shadow-soft mx-auto mb-4">
+                    <i class="ph-bold ph-flask text-3xl"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-brand-dark">SINFO</h1>
+                <p class="text-sm text-gray-500">Science Food Festival Info System</p>
+            </div>
+
+            <form id="login-form" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                    <div class="relative">
+                        <i class="ph ph-user absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="username" class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:border-brand-teal focus:ring-2 focus:ring-brand-teal-light outline-none transition-all" placeholder="Masukkan username" required>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <div class="relative">
+                        <i class="ph ph-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="password" id="password" class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:border-brand-teal focus:ring-2 focus:ring-brand-teal-light outline-none transition-all" placeholder="••••••••" required>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-brand-teal hover:bg-brand-teal-dark text-white font-semibold py-3 rounded-xl shadow-md transition-all hover:-translate-y-0.5">
+                    Login Sistem
+                </button>
+            </form>
+
+            <div class="mt-8 pt-6 border-t border-gray-100">
+                <p class="text-xs text-center text-gray-400 mb-3 uppercase tracking-wider font-semibold">Demo Accounts (Click to fill)</p>
+                <div class="flex flex-wrap gap-2 justify-center">
+                    <button onclick="fillLogin('operator')" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-xs rounded-lg transition-colors">Operator</button>
+                    <button onclick="fillLogin('guru')" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-xs rounded-lg transition-colors">Guru</button>
+                    <button onclick="fillLogin('juri')" class="px-3 py-1 bg-brand-yellow/20 text-yellow-700 hover:bg-brand-yellow/40 text-xs rounded-lg transition-colors font-medium">Juri (SCF)</button>
+                    <button onclick="fillLogin('siswa1')" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-xs rounded-lg transition-colors">Siswa (Ketua)</button>
+                    <button onclick="fillLogin('siswa2')" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-xs rounded-lg transition-colors">Siswa (Anggota)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 2. MAIN APP SHELL -->
+    <!-- ========================================== -->
+    <div id="app-view" class="hidden w-full h-full flex bg-gray-50 relative">
+        
+        <!-- SIDEBAR -->
+        <aside id="sidebar" class="w-72 bg-white border-r border-gray-200 flex flex-col transition-transform duration-300 absolute md:relative z-40 h-full -translate-x-full md:translate-x-0">
+            <div class="h-20 flex items-center px-6 border-b border-gray-100 justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-brand-teal rounded-lg flex items-center justify-center text-white">
+                        <i class="ph-bold ph-flask text-lg"></i>
+                    </div>
+                    <span class="font-bold text-lg text-brand-dark tracking-tight">SINFO.</span>
+                </div>
+                <button id="close-sidebar" class="md:hidden text-gray-500 hover:text-red-500">
+                    <i class="ph ph-x text-2xl"></i>
+                </button>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto py-6 px-4 no-scrollbar space-y-1" id="nav-menu">
+                <!-- Navigation items injected via JS -->
+            </div>
+
+            <div class="p-4 border-t border-gray-100">
+                <div class="flex items-center gap-3 px-2 py-2 rounded-xl bg-gray-50 border border-gray-100">
+                    <div class="w-10 h-10 rounded-full bg-brand-teal-light text-brand-teal flex items-center justify-center font-bold" id="user-initial">A</div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-semibold text-gray-800 truncate" id="user-name-display">User Name</p>
+                        <p class="text-xs text-gray-500 truncate capitalize" id="user-role-display">Role</p>
+                    </div>
+                </div>
+                <button onclick="logout()" class="mt-2 w-full flex items-center justify-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors font-medium">
+                    <i class="ph ph-sign-out"></i> Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 flex flex-col h-full overflow-hidden relative w-full">
+            <!-- Mobile Overlay -->
+            <div id="sidebar-overlay" class="fixed inset-0 bg-gray-900/50 z-30 hidden md:hidden glass transition-opacity opacity-0"></div>
+
+            <!-- TOPBAR -->
+            <header class="h-20 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-4 lg:px-8 z-20 shrink-0">
+                <div class="flex items-center gap-4">
+                    <button id="open-sidebar" class="md:hidden text-gray-600 hover:text-brand-teal p-2 rounded-lg bg-gray-50">
+                        <i class="ph ph-list text-2xl"></i>
+                    </button>
+                    <h2 class="text-xl font-bold text-brand-dark hidden sm:block" id="page-title">Dashboard</h2>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <!-- System Status Badge -->
+                    <div id="system-status-badge" class="px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-sm">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+            </header>
+
+            <!-- SYSTEM CLOSED OVERLAY -->
+            <div id="closed-overlay" class="hidden absolute inset-0 z-10 bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center text-center px-4 fade-in">
+                <i class="ph-duotone ph-lock-key text-6xl text-gray-400 mb-4"></i>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Sistem Sedang Ditutup</h2>
+                <p class="text-gray-500 max-w-md">Science Food Festival saat ini sedang tidak aktif atau dalam masa pemeliharaan. Silakan kembali lagi nanti.</p>
+            </div>
+
+            <!-- DYNAMIC VIEWS CONTAINER -->
+            <div id="dynamic-content" class="flex-1 overflow-y-auto p-4 lg:p-8 relative no-scrollbar">
+                <!-- Content injected via JS based on routing -->
+            </div>
+        </main>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODALS -->
+    <!-- ========================================== -->
+    
+    <!-- Modal: Juknis Viewer -->
+    <div id="modal-juknis" class="fixed inset-0 z-50 hidden flex items-center justify-center px-4 bg-gray-900/40 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col slide-up overflow-hidden">
+            <div class="flex justify-between items-center p-6 border-b border-gray-100">
+                <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2"><i class="ph-fill ph-book-open-text text-brand-teal"></i> Petunjuk Teknis SFF</h3>
+                <button onclick="closeModal('modal-juknis')" class="text-gray-400 hover:text-red-500 transition-colors"><i class="ph ph-x text-2xl"></i></button>
+            </div>
+            <div class="p-6 overflow-y-auto prose prose-teal max-w-none text-sm text-gray-600" id="juknis-content-display">
+                <!-- Content -->
+            </div>
+            <div class="p-4 border-t border-gray-100 bg-gray-50 flex justify-end">
+                <button onclick="closeModal('modal-juknis')" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg text-sm font-medium transition-colors">Tutup Dokumen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Form Kelompok (Guru) -->
+    <div id="modal-group" class="fixed inset-0 z-50 hidden flex items-center justify-center px-4 bg-gray-900/40 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg slide-up overflow-hidden">
+            <div class="flex justify-between items-center p-6 border-b border-gray-100">
+                <h3 class="text-lg font-bold text-gray-800">Bentuk Kelompok SFF</h3>
+                <button onclick="closeModal('modal-group')" class="text-gray-400 hover:text-red-500 transition-colors"><i class="ph ph-x text-2xl"></i></button>
+            </div>
+            <form id="form-group" class="p-6 space-y-4" onsubmit="handleSaveGroup(event)">
+                <input type="hidden" id="group-id">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama Kelompok</label>
+                    <input type="text" id="group-name" class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-brand-teal outline-none" placeholder="Misal: Kelompok 1 / Alpha" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Pilih Anggota (Maks 5, Min 3 disarankan)</label>
+                    <div id="group-members-checkboxes" class="max-h-40 overflow-y-auto bg-gray-50 p-3 rounded-xl border border-gray-200 space-y-2 text-sm">
+                        <!-- Checkboxes injected -->
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Pilih Ketua Kelompok</label>
+                    <select id="group-leader" class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-brand-teal outline-none bg-white" required>
+                        <option value="">-- Pilih anggota di atas terlebih dahulu --</option>
+                    </select>
+                </div>
+                <div class="pt-4 flex justify-end gap-2">
+                    <button type="button" onclick="closeModal('modal-group')" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-xl text-sm font-medium">Batal</button>
+                    <button type="submit" class="px-4 py-2 bg-brand-teal text-white rounded-xl text-sm font-medium hover:bg-brand-teal-dark shadow-sm">Simpan Kelompok</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Penilaian Juri / Guru -->
+    <div id="modal-assessment" class="fixed inset-0 z-50 hidden flex items-center justify-center px-4 bg-gray-900/60 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col slide-up overflow-hidden">
+            <div class="flex justify-between items-center p-5 border-b border-gray-100 bg-gray-50">
+                <h3 class="text-lg font-bold text-gray-800" id="assessment-title">Penilaian Kelompok</h3>
+                <button onclick="closeModal('modal-assessment')" class="text-gray-400 hover:text-red-500"><i class="ph ph-x text-2xl"></i></button>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto p-6 flex flex-col md:flex-row gap-6">
+                <!-- Kiri: Poster Info -->
+                <div class="w-full md:w-1/2 flex flex-col">
+                    <div class="bg-brand-teal-light/30 rounded-xl p-4 mb-4 border border-brand-teal/20">
+                        <p class="text-xs text-brand-teal font-bold uppercase tracking-wider mb-1">Target Penilaian</p>
+                        <h4 class="text-xl font-bold text-gray-800" id="assess-group-name">Nama Kelompok</h4>
+                        <p class="text-sm text-gray-600" id="assess-group-leader">Ketua: -</p>
+                    </div>
+                    <p class="text-sm font-medium text-gray-700 mb-2">Poster Media Edukasi:</p>
+                    <div class="flex-1 bg-gray-100 rounded-xl border border-gray-200 flex items-center justify-center overflow-hidden min-h-[300px] relative group">
+                        <img id="assess-poster-img" src="" alt="Poster" class="w-full h-full object-contain hidden">
+                        <div id="assess-poster-empty" class="text-center text-gray-400">
+                            <i class="ph-duotone ph-image text-4xl mb-2"></i>
+                            <p class="text-sm">Poster belum diunggah</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kanan: Form Penilaian -->
+                <div class="w-full md:w-1/2 flex flex-col">
+                    <form id="form-assessment" class="flex flex-col h-full" onsubmit="handleAssessmentSubmit(event)">
+                        <input type="hidden" id="assess-group-id">
+                        <input type="hidden" id="assess-type"> <!-- 'ipa' or 'juri' -->
+                        
+                        <div class="space-y-4 flex-1">
+                            <div class="bg-yellow-50 p-3 rounded-lg border border-yellow-100 text-sm text-yellow-800 mb-4 flex gap-2">
+                                <i class="ph-fill ph-info text-lg shrink-0"></i>
+                                <p id="assess-instruction">Beri penilaian (10-100) berdasarkan kriteria yang ditetapkan.</p>
+                            </div>
+
+                            <!-- Criteria dynamically injected -->
+                            <div id="assess-criteria-container" class="space-y-3"></div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Catatan Tambahan / Feedback</label>
+                                <textarea id="assess-notes" rows="3" class="w-full px-3 py-2 border border-gray-200 rounded-xl outline-none focus:border-brand-teal text-sm" placeholder="Berikan saran atau apresiasi..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="pt-6 mt-4 border-t border-gray-100 flex justify-between items-center" id="assess-actions">
+                            <span class="text-sm font-bold text-gray-500">Total: <span id="assess-total" class="text-brand-teal text-xl">0</span></span>
+                            <div class="flex gap-2">
+                                <button type="button" onclick="handleAssessmentDraft()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm font-medium transition-colors" id="btn-save-draft">Simpan Draft</button>
+                                <button type="submit" class="px-4 py-2 bg-brand-teal hover:bg-brand-teal-dark text-white rounded-xl text-sm font-medium shadow-md transition-all" id="btn-submit-nilai">Submit Final</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC -->
+    <!-- ========================================== -->
+    <script>
+        
+        // --- 1. MOCK DATABASE (Simulasi GARA & SCF) ---
+        const DB = {
+            system: {
+                status: 'OPEN', // OPEN or CLOSED
+                juknis: `
+                    <h4>Petunjuk Teknis Science Food Festival</h4>
+                    <p>Program pembelajaran berbasis proyek yang mengajak siswa memahami ilmu IPA melalui eksplorasi makanan, gizi, dan sistem pencernaan manusia.</p>
+                    <h5>Ketentuan Kelompok:</h5><ul><li>3-5 Siswa per kelompok</li><li>Dipimpin oleh 1 ketua</li></ul>
+                    <h5>Kriteria Penilaian Juri:</h5><ul><li>Keseimbangan Gizi (40%)</li><li>Kreativitas Penyajian (30%)</li><li>Rasa & Kebersihan (30%)</li></ul>
+                    <h5>Kriteria Penilaian Guru (IPA):</h5><ul><li>Pemahaman Sistem Pencernaan (50%)</li><li>Korelasi Gizi & Kesehatan (50%)</li></ul>
+                `
+            },
+            // GARA DB Simulation
+            users: [
+                { id: 'u_ops', username: 'operator', name: 'Admin Sekolah', role: 'operator' },
+                { id: 'u_g1', username: 'guru', name: 'Bapak Ahmad, S.Pd', role: 'guru' },
+                { id: 'u_g2', username: 'juri', name: 'Ibu Ratna, M.Pd', role: 'guru', scfAssignment: 'juri' }, // Note: Role is still 'guru', assigned as 'juri' in SCF
+                { id: 'u_g3', username: 'guru2', name: 'Bapak Budi, S.Pd', role: 'guru' },
+                { id: 'u_s1', username: 'siswa1', name: 'Andi Pratama', role: 'siswa' },
+                { id: 'u_s2', username: 'siswa2', name: 'Budi Santoso', role: 'siswa' },
+                { id: 'u_s3', username: 'siswa3', name: 'Citra Dewi', role: 'siswa' },
+                { id: 'u_s4', username: 'siswa4', name: 'Dian Ayu', role: 'siswa' },
+                { id: 'u_s5', username: 'siswa5', name: 'Eko Putra', role: 'siswa' },
+                { id: 'u_s6', username: 'siswa6', name: 'Fani Lestari', role: 'siswa' },
+                { id: 'u_sa', username: 'superadmin', name: 'Super Admin', role: 'superadmin' },
+                { id: 'u_ks', username: 'kepsek', name: 'Kepala Sekolah', role: 'kepsek' },
+            ],
+            // SCF DB Simulation
+            groups: [
+                { 
+                    id: 'g_1', name: 'Kelompok Alpha', 
+                    members: ['u_s1', 'u_s2', 'u_s3'], 
+                    leaderId: 'u_s1', // Siswa 1 is leader
+                    poster: { status: 'submitted', filename: 'poster_alpha.jpg', url: 'https://placehold.co/600x800/0d9488/ffffff?text=Poster+Alpha' },
+                    assessments: { 
+                        ipa: { status: 'pending', score: 0, notes: '' },
+                        juri: { status: 'submitted', score: 85, notes: 'Penyajian sangat menarik, konsep gizi tersampaikan.', juriId: 'u_g2' }
+                    }
+                },
+                { 
+                    id: 'g_2', name: 'Tim Sehat', 
+                    members: ['u_s4', 'u_s5'], 
+                    leaderId: 'u_s4',
+                    poster: { status: 'pending', filename: '', url: '' },
+                    assessments: { 
+                        ipa: { status: 'pending', score: 0, notes: '' },
+                        juri: { status: 'pending', score: 0, notes: '', juriId: 'u_g2' } // Assigned to juri u_g2
+                    }
+                }
+            ],
+            activities: [
+                { time: '10:30', desc: 'Operator membuka sistem SINFO.' },
+                { time: '11:00', desc: 'Kelompok Alpha mengunggah poster.' },
+                { time: '13:15', desc: 'Juri Ratna menyelesaikan penilaian Kelompok Alpha.' }
+            ]
+        };
+
+        // Criteria Configs
+        const criteriaConfig = {
+            ipa: [
+                { id: 'c_ipa_1', label: 'Pemahaman fungsi organ tubuh', max: 50 },
+                { id: 'c_ipa_2', label: 'Hubungan makanan & kesehatan', max: 50 }
+            ],
+            juri: [
+                { id: 'c_jur_1', label: 'Keseimbangan Gizi', max: 40 },
+                { id: 'c_jur_2', label: 'Kreativitas Penyajian', max: 30 },
+                { id: 'c_jur_3', label: 'Rasa & Kebersihan', max: 30 }
+            ]
+        };
+
+        
+        // --- 2. STATE MANAGEMENT ---
+        const AppState = {
+            currentUser: null,
+            currentView: 'dashboard'
+        };
+
+        // --- 3. RBAC (Role-Based Access Control) ---
+        const Permissions = {
+            operator: ['view_dashboard_ops', 'manage_system', 'manage_juknis', 'view_all'],
+            guru: ['view_dashboard_guru', 'manage_groups', 'assess_ipa', 'view_juknis'],
+            juri: ['view_dashboard_juri', 'assess_juri', 'view_juknis'],
+            siswa: ['view_dashboard_siswa', 'view_juknis'],
+            superadmin: ['view_placeholder'],
+            kepsek: ['view_placeholder']
+        };
+
+        function getEffectiveRole(user) {
+            if (!user) return null;
+            if (user.role === 'guru' && user.scfAssignment === 'juri') return 'juri';
+            return user.role; // operator, guru, siswa, dll
+        }
+
+        function hasPermission(action) {
+            if (!AppState.currentUser) return false;
+            const role = getEffectiveRole(AppState.currentUser);
+            if (Permissions[role] && Permissions[role].includes(action)) return true;
+            // Overrides for special conditions
+            if (role === 'siswa' && action === 'upload_poster') {
+                // Only leader can upload
+                const myGroup = DB.groups.find(g => g.members.includes(AppState.currentUser.id));
+                return myGroup && myGroup.leaderId === AppState.currentUser.id;
+            }
+            return false;
+        }
+
+
+        // --- 4. AUTHENTICATION ---
+        function fillLogin(type) {
+            document.getElementById('password').value = 'demo123';
+            document.getElementById('username').value = type;
+        }
+
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const uname = document.getElementById('username').value;
+            
+            // Simple mock authentication
+            const user = DB.users.find(u => u.username === uname);
+            if (user) {
+                AppState.currentUser = user;
+                initApp();
+            } else {
+                Swal.fire({ icon: 'error', title: 'Login Gagal', text: 'Username tidak ditemukan.', confirmButtonColor: '#0d9488' });
+            }
+        });
+
+        function logout() {
+            Swal.fire({
+                title: 'Keluar sistem?', text: "Sesi anda akan diakhiri.", icon: 'question',
+                showCancelButton: true, confirmButtonColor: '#0d9488', cancelButtonColor: '#d1d5db', confirmButtonText: 'Ya, Logout'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    AppState.currentUser = null;
+                    document.getElementById('app-view').classList.add('hidden');
+                    document.getElementById('login-view').classList.remove('hidden');
+                    document.getElementById('username').value = '';
+                    document.getElementById('password').value = '';
+                }
+            });
+        }
+
+
+        // --- 5. APP INITIALIZATION & ROUTING ---
+        function initApp() {
+            document.getElementById('login-view').classList.add('hidden');
+            document.getElementById('app-view').classList.remove('hidden');
+            
+            // Update User Info in Sidebar
+            const user = AppState.currentUser;
+            document.getElementById('user-name-display').textContent = user.name;
+            const effectiveRole = getEffectiveRole(user);
+            document.getElementById('user-role-display').textContent = effectiveRole === 'guru' ? 'Guru Pendamping' : effectiveRole;
+            document.getElementById('user-initial').textContent = user.name.charAt(0).toUpperCase();
+
+            updateSystemStatusUI();
+            buildSidebar();
+            
+            // Handle System Closed state
+            if (DB.system.status === 'CLOSED' && effectiveRole !== 'operator') {
+                document.getElementById('closed-overlay').classList.remove('hidden');
+                document.getElementById('sidebar').classList.add('pointer-events-none', 'opacity-50');
+            } else {
+                document.getElementById('closed-overlay').classList.add('hidden');
+                document.getElementById('sidebar').classList.remove('pointer-events-none', 'opacity-50');
+                navigate('dashboard'); // Default view
+            }
+        }
+
+        function updateSystemStatusUI() {
+            const badge = document.getElementById('system-status-badge');
+            if (DB.system.status === 'OPEN') {
+                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> <span class="text-green-700">Sistem Buka</span>`;
+                badge.className = "px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-sm bg-green-100 border border-green-200";
+            } else {
+                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-red-500"></span> <span class="text-red-700">Sistem Tutup</span>`;
+                badge.className = "px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-sm bg-red-100 border border-red-200";
+            }
+        }
+
+        // --- SIDEBAR BUILDER ---
+        function buildSidebar() {
+            const menu = document.getElementById('nav-menu');
+            menu.innerHTML = '';
+            const role = getEffectiveRole(AppState.currentUser);
+
+            const addLink = (id, icon, text) => {
+                menu.innerHTML += `
+                    <a href="#" onclick="navigate('${id}'); return false;" id="nav-${id}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
+                        <i class="ph ${icon} text-xl"></i> ${text}
+                    </a>`;
+            };
+
+            // Common mapping based on roles
+            addLink('dashboard', 'ph-squares-four', 'Dashboard');
+
+            if (role === 'operator') {
+                addLink('manage_users', 'ph-users-three', 'Guru & Juri');
+                addLink('juknis', 'ph-book-open-text', 'Juklak & Juknis');
+            } 
+            else if (role === 'guru') {
+                addLink('groups', 'ph-users', 'Kelola Kelompok');
+                addLink('assess_ipa', 'ph-exam', 'Penilaian IPA');
+                addLink('juknis', 'ph-book-open-text', 'Juklak & Juknis');
+            }
+            else if (role === 'juri') {
+                addLink('assess_juri', 'ph-star', 'Penilaian Juri');
+                addLink('juknis', 'ph-book-open-text', 'Juklak & Juknis');
+            }
+            else if (role === 'siswa') {
+                addLink('my_group', 'ph-users', 'Kelompok Saya');
+                addLink('juknis', 'ph-book-open-text', 'Juklak & Juknis');
+            }
+        }
+
+        // --- ROUTER ---
+        function navigate(viewId) {
+            AppState.currentView = viewId;
+            const container = document.getElementById('dynamic-content');
+            const title = document.getElementById('page-title');
+            
+            // Active states for sidebar
+            document.querySelectorAll('.nav-link').forEach(el => {
+                el.classList.remove('bg-brand-teal', 'text-white', 'shadow-md');
+                el.classList.add('text-gray-600', 'hover:bg-brand-teal-light');
+            });
+            const activeNav = document.getElementById(`nav-${viewId}`);
+            if(activeNav) {
+                activeNav.classList.remove('text-gray-600', 'hover:bg-brand-teal-light');
+                activeNav.classList.add('bg-brand-teal', 'text-white', 'shadow-md');
+            }
+
+            // Close mobile sidebar if open
+            if(window.innerWidth < 768) toggleSidebar(false);
+
+            // Render logic
+            container.innerHTML = ''; // clear
+            container.classList.remove('fade-in');
+            void container.offsetWidth; // trigger reflow
+            container.classList.add('fade-in');
+
+            const role = getEffectiveRole(AppState.currentUser);
+
+            if (role === 'superadmin' || role === 'kepsek') {
+                title.textContent = "Monitoring";
+                container.innerHTML = renderPlaceholderDashboard();
+                return;
+            }
+
+            switch(viewId) {
+                case 'dashboard':
+                    title.textContent = "Dashboard SINFO";
+                    if (role === 'operator') container.innerHTML = renderDashboardOperator();
+                    if (role === 'guru') container.innerHTML = renderDashboardGuru();
+                    if (role === 'juri') container.innerHTML = renderDashboardJuri();
+                    if (role === 'siswa') container.innerHTML = renderDashboardSiswa();
+                    break;
+                case 'juknis':
+                    title.textContent = "Juklak & Juknis";
+                    container.innerHTML = renderJuknisPage(role);
+                    break;
+                case 'groups': // Guru only
+                    title.textContent = "Kelola Kelompok";
+                    container.innerHTML = renderGroupsPage();
+                    break;
+                case 'assess_ipa': // Guru only
+                    title.textContent = "Penilaian Materi IPA";
+                    container.innerHTML = renderAssessList('ipa');
+                    break;
+                case 'assess_juri': // Juri only
+                    title.textContent = "Penilaian Festival";
+                    container.innerHTML = renderAssessList('juri');
+                    break;
+                case 'my_group': // Siswa only
+                    title.textContent = "Detail Kelompok";
+                    container.innerHTML = renderSiswaGroup();
+                    break;
+                default:
+                    container.innerHTML = `<div class="p-8 text-center text-gray-500">View Not Found</div>`;
+            }
+        }
+
+
+        // --- 6. UI RENDERERS ---
+
+        function renderPlaceholderDashboard() {
+            return `
+                <div class="h-full flex flex-col items-center justify-center text-center p-8">
+                    <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 mb-4">
+                        <i class="ph-duotone ph-shield-check text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Akses Terbatas SINFO</h3>
+                    <p class="text-gray-500 mt-2 max-w-md">Role Anda tercatat dalam sistem pusat GARA. Untuk modul khusus Science Food Festival, Anda hanya memiliki akses monitoring pasif.</p>
+                </div>
+            `;
+        }
+
+        function renderDashboardOperator() {
+            const juriCount = DB.users.filter(u => u.scfAssignment === 'juri').length;
+            const guruCount = DB.users.filter(u => u.role === 'guru' && u.scfAssignment !== 'juri').length;
+            const grpCount = DB.groups.length;
+
+            return `
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-card border border-gray-100 flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-brand-teal-light text-brand-teal flex items-center justify-center text-2xl"><i class="ph-fill ph-users"></i></div>
+                        <div><p class="text-gray-500 text-sm font-medium">Total Kelompok</p><h3 class="text-2xl font-bold text-gray-800">${grpCount}</h3></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-card border border-gray-100 flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-yellow-100 text-yellow-600 flex items-center justify-center text-2xl"><i class="ph-fill ph-chalkboard-teacher"></i></div>
+                        <div><p class="text-gray-500 text-sm font-medium">Guru Pembimbing</p><h3 class="text-2xl font-bold text-gray-800">${guruCount}</h3></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-card border border-gray-100 flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl"><i class="ph-fill ph-star"></i></div>
+                        <div><p class="text-gray-500 text-sm font-medium">Juri Festival</p><h3 class="text-2xl font-bold text-gray-800">${juriCount}</h3></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Quick Actions -->
+                    <div class="bg-white p-6 rounded-2xl shadow-card border border-gray-100">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Kontrol Sistem Utama</h3>
+                        <div class="p-5 rounded-xl border ${DB.system.status === 'OPEN' ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'} flex items-center justify-between mb-4 transition-colors" id="sys-control-card">
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-lg">Status Akses: <span class="${DB.system.status === 'OPEN' ? 'text-green-600' : 'text-red-600'}" id="sys-text-status">${DB.system.status}</span></h4>
+                                <p class="text-sm text-gray-600 mt-1">Mengatur apakah guru, juri, dan siswa dapat masuk.</p>
+                            </div>
+                            <button onclick="toggleSystem()" class="px-5 py-2.5 rounded-xl font-bold text-white shadow-md transition-all hover:scale-105 ${DB.system.status === 'OPEN' ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'}" id="btn-toggle-sys">
+                                ${DB.system.status === 'OPEN' ? 'TUTUP SISTEM' : 'BUKA SISTEM'}
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button onclick="navigate('juknis')" class="p-3 border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-brand-teal-light hover:border-brand-teal transition-colors text-gray-700">
+                                <i class="ph-duotone ph-file-text text-2xl text-brand-teal"></i> <span class="text-sm font-medium">Edit Juknis</span>
+                            </button>
+                            <button class="p-3 border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-gray-50 transition-colors text-gray-400 cursor-not-allowed" title="Prototype: Modifikasi GARA via Admin Pusat">
+                                <i class="ph-duotone ph-users text-2xl"></i> <span class="text-sm font-medium">Kelola User GARA</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Activity Log -->
+                    <div class="bg-white p-6 rounded-2xl shadow-card border border-gray-100">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Aktivitas Sistem</h3>
+                        <div class="space-y-4">
+                            ${DB.activities.map(act => `
+                                <div class="flex gap-4">
+                                    <div class="w-12 text-xs font-bold text-gray-400 pt-1 shrink-0">${act.time}</div>
+                                    <div class="flex-1 pb-4 border-b border-gray-100 text-sm text-gray-700">${act.desc}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderDashboardGuru() {
+            return `
+                <div class="bg-brand-teal p-8 rounded-3xl shadow-soft text-white relative overflow-hidden mb-8">
+                    <div class="absolute right-0 bottom-0 opacity-10"><i class="ph-fill ph-chalkboard-teacher text-[150px]"></i></div>
+                    <div class="relative z-10">
+                        <h2 class="text-3xl font-bold mb-2">Selamat Datang, ${AppState.currentUser.name}</h2>
+                        <p class="text-brand-teal-light max-w-xl">Kelola pembentukan kelompok siswa dan pantau pengumpulan proyek Science Food Festival dari dashboard ini.</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div onclick="navigate('groups')" class="bg-white p-6 rounded-2xl shadow-card border border-gray-100 cursor-pointer hover:shadow-soft transition-all group">
+                        <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="ph-fill ph-users-three"></i></div>
+                        <h3 class="font-bold text-gray-800 text-lg">Kelola Kelompok</h3>
+                        <p class="text-sm text-gray-500 mt-1">Bentuk kelompok dan tentukan ketua.</p>
+                    </div>
+                    <div onclick="navigate('assess_ipa')" class="bg-white p-6 rounded-2xl shadow-card border border-gray-100 cursor-pointer hover:shadow-soft transition-all group">
+                        <div class="w-14 h-14 bg-yellow-50 text-yellow-600 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="ph-fill ph-exam"></i></div>
+                        <h3 class="font-bold text-gray-800 text-lg">Penilaian Materi IPA</h3>
+                        <p class="text-sm text-gray-500 mt-1">Beri nilai pada poster yang terkumpul.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderDashboardJuri() {
+            // Count assignments
+            const assigned = DB.groups.filter(g => g.assessments.juri.juriId === AppState.currentUser.id);
+            const done = assigned.filter(g => g.assessments.juri.status === 'submitted').length;
+
+            return `
+                <div class="bg-white p-8 rounded-3xl shadow-card border border-gray-100 text-center mb-8 relative overflow-hidden">
+                    <div class="w-20 h-20 bg-brand-yellow/20 text-brand-yellow rounded-full flex items-center justify-center text-4xl mx-auto mb-4"><i class="ph-fill ph-star"></i></div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Dashboard Juri Penilai</h2>
+                    <p class="text-gray-500 max-w-lg mx-auto">Anda ditugaskan menilai <strong>${assigned.length} kelompok</strong> pada festival kali ini. Progress Anda: ${done}/${assigned.length} dinilai.</p>
+                    <button onclick="navigate('assess_juri')" class="mt-6 bg-brand-dark hover:bg-black text-white px-8 py-3 rounded-xl font-bold transition-all shadow-md">Mulai Menilai</button>
+                </div>
+            `;
+        }
+
+        function renderDashboardSiswa() {
+            const myGroup = DB.groups.find(g => g.members.includes(AppState.currentUser.id));
+            let content = '';
+
+            if (myGroup) {
+                const isLeader = myGroup.leaderId === AppState.currentUser.id;
+                const statusPoster = myGroup.poster.status;
+                const badgeColor = statusPoster === 'submitted' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700';
+                
+                content = `
+                    <div class="bg-white rounded-3xl shadow-card border border-gray-100 overflow-hidden">
+                        <div class="p-8 border-b border-gray-100 bg-gradient-to-r from-brand-teal-light/50 to-white flex justify-between items-center">
+                            <div>
+                                <p class="text-brand-teal font-bold text-sm tracking-widest uppercase mb-1">Status Kelompok SFF</p>
+                                <h3 class="text-3xl font-extrabold text-gray-800">${myGroup.name}</h3>
+                            </div>
+                            <div class="w-16 h-16 bg-white rounded-2xl shadow-sm border border-brand-teal/10 flex items-center justify-center text-3xl">
+                                ${isLeader ? '👑' : '👥'}
+                            </div>
+                        </div>
+                        <div class="p-8 grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="font-bold text-gray-700 mb-4 flex items-center gap-2"><i class="ph-fill ph-info"></i> Informasi</h4>
+                                <ul class="space-y-3 text-sm">
+                                    <li class="flex justify-between border-b border-gray-50 pb-2"><span class="text-gray-500">Peran Anda:</span> <strong class="${isLeader ? 'text-brand-teal' : 'text-gray-800'}">${isLeader ? 'Ketua Kelompok' : 'Anggota'}</strong></li>
+                                    <li class="flex justify-between border-b border-gray-50 pb-2"><span class="text-gray-500">Status Poster:</span> <span class="px-2 py-0.5 rounded-md text-xs font-bold ${badgeColor}">${statusPoster.toUpperCase()}</span></li>
+                                </ul>
+                                
+                                ${isLeader ? `
+                                    <div class="mt-6 p-4 bg-brand-teal-light/30 rounded-xl border border-brand-teal/20 text-sm">
+                                        <p class="font-semibold text-brand-dark mb-2">Aksi Khusus Ketua:</p>
+                                        <button onclick="simulateUploadPoster('${myGroup.id}')" class="w-full bg-brand-teal hover:bg-brand-teal-dark text-white py-2.5 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 shadow-sm">
+                                            <i class="ph-bold ph-upload-simple"></i> Upload/Update Poster
+                                        </button>
+                                    </div>
+                                ` : `
+                                    <div class="mt-6 p-4 bg-gray-50 rounded-xl border border-gray-200 text-sm text-gray-500 flex gap-2">
+                                        <i class="ph-fill ph-lock-key text-lg shrink-0"></i>
+                                        <p>Hanya Ketua Kelompok yang dapat mengunggah file poster.</p>
+                                    </div>
+                                `}
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-700 mb-4 flex items-center gap-2"><i class="ph-fill ph-users"></i> Anggota (${myGroup.members.length})</h4>
+                                <div class="space-y-2">
+                                    ${myGroup.members.map(uId => {
+                                        const u = DB.users.find(x => x.id === uId);
+                                        const isLdr = u.id === myGroup.leaderId;
+                                        return `<div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100">
+                                            <div class="w-8 h-8 rounded-full ${isLdr ? 'bg-brand-yellow text-white' : 'bg-gray-200 text-gray-600'} flex items-center justify-center text-xs font-bold">${u.name.charAt(0)}</div>
+                                            <span class="text-sm font-medium text-gray-800 flex-1">${u.name}</span>
+                                            ${isLdr ? '<span class="text-[10px] font-bold bg-brand-yellow/20 text-yellow-700 px-2 py-1 rounded">KETUA</span>' : ''}
+                                        </div>`;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                content = `
+                    <div class="bg-white p-10 rounded-3xl shadow-card border border-gray-100 text-center flex flex-col items-center justify-center h-[60vh]">
+                        <img src="https://placehold.co/200x200/f3f4f6/9ca3af?text=Belum+Ada+Kelompok" class="rounded-full mb-6 w-32 h-32 object-cover">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Anda Belum Memiliki Kelompok</h3>
+                        <p class="text-gray-500 max-w-md mx-auto">Guru pembimbing sedang menyusun formasi kelompok. Silakan pantau secara berkala atau hubungi guru Anda.</p>
+                    </div>
+                `;
+            }
+            return content;
+        }
+
+
+        // --- GROUP MANAGEMENT (GURU) ---
+        function renderGroupsPage() {
+            let tableRows = '';
+            if (DB.groups.length === 0) {
+                tableRows = `<tr><td colspan="5" class="p-6 text-center text-gray-500">Belum ada kelompok dibentuk.</td></tr>`;
+            } else {
+                DB.groups.forEach((g, idx) => {
+                    const leader = DB.users.find(u => u.id === g.leaderId)?.name || '-';
+                    tableRows += `
+                        <tr class="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                            <td class="p-4 text-sm text-gray-500 text-center">${idx + 1}</td>
+                            <td class="p-4 font-bold text-gray-800">${g.name}</td>
+                            <td class="p-4 text-sm text-gray-600">${leader}</td>
+                            <td class="p-4 text-sm text-center"><span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-md font-medium">${g.members.length} Orang</span></td>
+                            <td class="p-4 text-center">
+                                <button onclick="editGroup('${g.id}')" class="text-brand-teal hover:text-brand-teal-dark p-2 bg-brand-teal-light/50 rounded-lg transition-colors" title="Edit"><i class="ph-bold ph-pencil-simple"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+
+            return `
+                <div class="bg-white rounded-2xl shadow-card border border-gray-100 overflow-hidden flex flex-col">
+                    <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                        <h3 class="font-bold text-gray-800 text-lg">Daftar Kelompok SFF</h3>
+                        <button onclick="openGroupModal()" class="bg-brand-dark hover:bg-black text-white px-4 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 shadow-sm">
+                            <i class="ph-bold ph-plus"></i> Bentuk Kelompok
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50 border-b border-gray-200 text-xs uppercase tracking-wider text-gray-500">
+                                    <th class="p-4 w-12 text-center">No</th>
+                                    <th class="p-4">Nama Kelompok</th>
+                                    <th class="p-4">Ketua</th>
+                                    <th class="p-4 text-center">Anggota</th>
+                                    <th class="p-4 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>${tableRows}</tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAssessList(type) {
+            // type: 'ipa' (Guru) or 'juri' (Juri)
+            let groupsToAssess = DB.groups;
+            if (type === 'juri') {
+                groupsToAssess = DB.groups.filter(g => g.assessments.juri.juriId === AppState.currentUser.id);
+            }
+
+            let cards = '';
+            if (groupsToAssess.length === 0) {
+                cards = `<div class="col-span-full p-10 text-center text-gray-500 bg-white rounded-2xl border border-gray-100">Tidak ada kelompok untuk dinilai saat ini.</div>`;
+            } else {
+                groupsToAssess.forEach(g => {
+                    const statusVal = g.assessments[type].status;
+                    const posterStatus = g.poster.status;
+                    
+                    let badge = '';
+                    let actionBtn = '';
+                    
+                    if (statusVal === 'submitted') {
+                        badge = `<span class="bg-green-100 text-green-700 text-xs font-bold px-2.5 py-1 rounded-md flex items-center gap-1"><i class="ph-fill ph-check-circle"></i> Selesai Dinilai</span>`;
+                        actionBtn = `<button onclick="openAssessment('${g.id}', '${type}')" class="w-full mt-4 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded-xl text-sm font-medium transition-colors">Lihat Nilai</button>`;
+                    } else if (posterStatus === 'submitted') {
+                        badge = `<span class="bg-yellow-100 text-yellow-700 text-xs font-bold px-2.5 py-1 rounded-md flex items-center gap-1"><i class="ph-fill ph-warning-circle"></i> Belum Dinilai</span>`;
+                        actionBtn = `<button onclick="openAssessment('${g.id}', '${type}')" class="w-full mt-4 bg-brand-teal hover:bg-brand-teal-dark shadow-sm text-white py-2 rounded-xl text-sm font-medium transition-colors">Beri Nilai</button>`;
+                    } else {
+                        badge = `<span class="bg-gray-100 text-gray-500 text-xs font-bold px-2.5 py-1 rounded-md">Menunggu Poster</span>`;
+                        actionBtn = `<button disabled class="w-full mt-4 bg-gray-50 text-gray-400 py-2 rounded-xl text-sm font-medium cursor-not-allowed border border-gray-200">Belum Tersedia</button>`;
+                    }
+
+                    cards += `
+                        <div class="bg-white p-5 rounded-2xl shadow-card border border-gray-100 flex flex-col justify-between hover:shadow-soft transition-shadow">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <h4 class="font-bold text-gray-800 text-lg">${g.name}</h4>
+                                    ${badge}
+                                </div>
+                                <p class="text-sm text-gray-500 mb-1"><i class="ph-fill ph-image text-gray-400"></i> Poster: ${posterStatus === 'submitted' ? '<span class="text-brand-teal font-medium">Terkumpul</span>' : 'Belum'}</p>
+                            </div>
+                            ${actionBtn}
+                        </div>
+                    `;
+                });
+            }
+
+            return `
+                <div class="bg-brand-teal-light/20 p-4 rounded-xl border border-brand-teal/20 mb-6 flex items-center gap-3 text-sm text-brand-dark">
+                    <i class="ph-fill ph-info text-xl text-brand-teal"></i>
+                    <p>Penilaian yang telah berstatus <strong>Final / Submitted</strong> tidak dapat diubah kembali. Pastikan data sudah benar.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    ${cards}
+                </div>
+            `;
+        }
+
+        function renderJuknisPage(role) {
+            return `
+                <div class="bg-white rounded-2xl shadow-card border border-gray-100 overflow-hidden max-w-4xl mx-auto">
+                    <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                        <h3 class="font-bold text-gray-800 text-lg"><i class="ph-duotone ph-book-open-text text-brand-teal"></i> Dokumen Master</h3>
+                        ${role === 'operator' ? `<button onclick="editJuknis()" class="bg-brand-teal text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-brand-teal-dark shadow-sm">Edit Konten</button>` : ''}
+                    </div>
+                    <div class="p-8 prose prose-teal max-w-none text-gray-700">
+                        ${DB.system.juknis}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderSiswaGroup() {
+            // Already handled inside renderDashboardSiswa for prototype simplicity
+            return renderDashboardSiswa();
+        }
+
+
+        // --- 7. ACTIONS & MODALS LOGIC ---
+
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        // Action: Toggle System (Operator)
+        function toggleSystem() {
+            Swal.fire({
+                title: 'Ubah Status Sistem?',
+                text: `Sistem saat ini ${DB.system.status}. Yakin ingin mengubahnya?`,
+                icon: 'warning', showCancelButton: true, confirmButtonColor: '#0d9488',
+                confirmButtonText: 'Ya, Ubah'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    DB.system.status = DB.system.status === 'OPEN' ? 'CLOSED' : 'OPEN';
+                    updateSystemStatusUI();
+                    navigate('dashboard'); // re-render dashboard
+                    Swal.fire('Berhasil', `Sistem kini ${DB.system.status}`, 'success');
+                }
+            });
+        }
+
+        // Action: Juknis
+        function editJuknis() {
+            Swal.fire({
+                title: 'Maaf',
+                text: 'Fitur Rich Text Editor disimulasikan. (Prototype Limit)',
+                icon: 'info'
+            });
+        }
+
+        // Action: Group Modal
+        function openGroupModal(groupId = null) {
+            const form = document.getElementById('form-group');
+            form.reset();
+            document.getElementById('group-id').value = '';
+            
+            // Populate checkboxes for all students
+            const allSiswa = DB.users.filter(u => u.role === 'siswa');
+            const cbContainer = document.getElementById('group-members-checkboxes');
+            cbContainer.innerHTML = '';
+            
+            let currentMembers = [];
+            if (groupId) {
+                const grp = DB.groups.find(g => g.id === groupId);
+                document.getElementById('group-id').value = grp.id;
+                document.getElementById('group-name').value = grp.name;
+                currentMembers = grp.members;
+            }
+
+            allSiswa.forEach(s => {
+                const isChecked = currentMembers.includes(s.id) ? 'checked' : '';
+                cbContainer.innerHTML += `
+                    <label class="flex items-center gap-2 cursor-pointer p-1 hover:bg-gray-100 rounded">
+                        <input type="checkbox" value="${s.id}" class="grp-member-cb w-4 h-4 text-brand-teal rounded border-gray-300 focus:ring-brand-teal" ${isChecked} onchange="updateLeaderDropdown()">
+                        <span>${s.name}</span>
+                    </label>
+                `;
+            });
+
+            updateLeaderDropdown(groupId ? DB.groups.find(g => g.id === groupId).leaderId : null);
+            openModal('modal-group');
+        }
+
+        function editGroup(id) { openGroupModal(id); }
+
+        function updateLeaderDropdown(selectedLeaderId = null) {
+            const checkboxes = document.querySelectorAll('.grp-member-cb:checked');
+            const select = document.getElementById('group-leader');
+            select.innerHTML = '<option value="">-- Pilih Ketua --</option>';
+            
+            checkboxes.forEach(cb => {
+                const s = DB.users.find(u => u.id === cb.value);
+                const isSelected = selectedLeaderId === s.id ? 'selected' : '';
+                select.innerHTML += `<option value="${s.id}" ${isSelected}>${s.name}</option>`;
+            });
+        }
+
+        function handleSaveGroup(e) {
+            e.preventDefault();
+            const id = document.getElementById('group-id').value;
+            const name = document.getElementById('group-name').value;
+            const leaderId = document.getElementById('group-leader').value;
+            const members = Array.from(document.querySelectorAll('.grp-member-cb:checked')).map(cb => cb.value);
+
+            if (members.length < 1) {
+                Swal.fire('Error', 'Pilih minimal 1 anggota.', 'error');
+                return;
+            }
+            if (!leaderId) {
+                Swal.fire('Error', 'Ketua kelompok harus dipilih dari anggota.', 'error');
+                return;
+            }
+
+            if (id) {
+                const grp = DB.groups.find(g => g.id === id);
+                grp.name = name; grp.members = members; grp.leaderId = leaderId;
+            } else {
+                DB.groups.push({
+                    id: 'g_' + Date.now(), name: name, members: members, leaderId: leaderId,
+                    poster: { status: 'pending', filename: '', url: '' },
+                    assessments: { ipa: { status: 'pending', score: 0 }, juri: { status: 'pending', score: 0 } }
+                });
+            }
+            closeModal('modal-group');
+            Swal.fire({title: 'Tersimpan!', icon: 'success', timer: 1000, showConfirmButton: false});
+            navigate('groups');
+        }
+
+        // Action: Upload Poster (Siswa)
+        function simulateUploadPoster(groupId) {
+            Swal.fire({
+                title: 'Upload Poster',
+                text: 'Simulasi proses upload (Pilih file di lokal)',
+                input: 'file',
+                inputAttributes: { 'accept': 'image/*', 'aria-label': 'Upload your profile picture' },
+                confirmButtonColor: '#0d9488'
+            }).then((file) => {
+                if (file.value) {
+                    const grp = DB.groups.find(g => g.id === groupId);
+                    grp.poster.status = 'submitted';
+                    grp.poster.filename = file.value.name;
+                    // Use a placeholder for the preview
+                    grp.poster.url = 'https://placehold.co/600x800/0d9488/ffffff?text=Uploaded+Poster';
+                    Swal.fire('Berhasil', 'Poster berhasil diunggah.', 'success');
+                    navigate('dashboard'); // refresh view
+                }
+            });
+        }
+
+        // Action: Assessment Modal
+        function openAssessment(groupId, type) {
+            const grp = DB.groups.find(g => g.id === groupId);
+            const leader = DB.users.find(u => u.id === grp.leaderId)?.name || '-';
+            const data = grp.assessments[type];
+            const config = criteriaConfig[type];
+            const isSubmitted = data.status === 'submitted';
+
+            document.getElementById('assess-group-id').value = grp.id;
+            document.getElementById('assess-type').value = type;
+            document.getElementById('assessment-title').textContent = type === 'ipa' ? 'Penilaian IPA Guru' : 'Penilaian Festival Juri';
+            document.getElementById('assess-group-name').textContent = grp.name;
+            document.getElementById('assess-group-leader').textContent = `Ketua: ${leader}`;
+            
+            // Poster
+            const img = document.getElementById('assess-poster-img');
+            const empty = document.getElementById('assess-poster-empty');
+            if (grp.poster.status === 'submitted') {
+                img.src = grp.poster.url;
+                img.classList.remove('hidden');
+                empty.classList.add('hidden');
+            } else {
+                img.src = '';
+                img.classList.add('hidden');
+                empty.classList.remove('hidden');
+            }
+
+            // Render Form Inputs
+            const container = document.getElementById('assess-criteria-container');
+            container.innerHTML = '';
+            
+            // Generate dummy scores based on max if previously saved, else 0
+            config.forEach((c, idx) => {
+                // If submitted, show fixed values, otherwise show inputs. (Mocking input values for prototype)
+                const mockVal = data.score > 0 ? Math.round((data.score / 100) * c.max) : 0;
+                
+                container.innerHTML += `
+                    <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                        <div class="pr-4">
+                            <p class="text-sm font-semibold text-gray-800">${c.label}</p>
+                            <p class="text-[10px] text-gray-400">Max Score: ${c.max}</p>
+                        </div>
+                        <input type="number" min="0" max="${c.max}" value="${mockVal}" class="score-input w-20 text-center px-2 py-1.5 border border-gray-300 rounded-lg outline-none focus:border-brand-teal font-bold ${isSubmitted ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : 'bg-white'}" ${isSubmitted ? 'disabled' : ''} oninput="calcTotalScore()">
+                    </div>
+                `;
+            });
+
+            document.getElementById('assess-notes').value = data.notes || '';
+            document.getElementById('assess-notes').disabled = isSubmitted;
+            
+            // Footer actions
+            const actions = document.getElementById('assess-actions');
+            if (isSubmitted) {
+                document.getElementById('btn-save-draft').classList.add('hidden');
+                document.getElementById('btn-submit-nilai').classList.add('hidden');
+                document.getElementById('assess-instruction').innerHTML = "Penilaian telah dikunci (Submitted).";
+                document.getElementById('assess-instruction').parentElement.classList.replace('bg-yellow-50', 'bg-green-50');
+                document.getElementById('assess-instruction').parentElement.classList.replace('text-yellow-800', 'text-green-800');
+            } else {
+                document.getElementById('btn-save-draft').classList.remove('hidden');
+                document.getElementById('btn-submit-nilai').classList.remove('hidden');
+                document.getElementById('assess-instruction').innerHTML = "Beri penilaian berdasarkan kriteria. Klik Submit Final untuk mengunci.";
+                document.getElementById('assess-instruction').parentElement.classList.replace('bg-green-50', 'bg-yellow-50');
+                document.getElementById('assess-instruction').parentElement.classList.replace('text-green-800', 'text-yellow-800');
+            }
+
+            calcTotalScore();
+            openModal('modal-assessment');
+        }
+
+        function calcTotalScore() {
+            let total = 0;
+            document.querySelectorAll('.score-input').forEach(inp => {
+                total += Number(inp.value) || 0;
+            });
+            document.getElementById('assess-total').textContent = total;
+            return total;
+        }
+
+        function handleAssessmentDraft() {
+            saveAssessment('draft');
+        }
+
+        function handleAssessmentSubmit(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Submit Final?',
+                text: "Nilai yang disubmit tidak dapat diubah kembali.",
+                icon: 'warning', showCancelButton: true, confirmButtonColor: '#0d9488'
+            }).then((result) => {
+                if (result.isConfirmed) saveAssessment('submitted');
+            });
+        }
+
+        function saveAssessment(statusTarget) {
+            const id = document.getElementById('assess-group-id').value;
+            const type = document.getElementById('assess-type').value;
+            const total = calcTotalScore();
+            const notes = document.getElementById('assess-notes').value;
+
+            const grp = DB.groups.find(g => g.id === id);
+            grp.assessments[type].score = total;
+            grp.assessments[type].notes = notes;
+            grp.assessments[type].status = statusTarget;
+
+            closeModal('modal-assessment');
+            
+            if (statusTarget === 'submitted') {
+                Swal.fire('Berhasil', 'Penilaian final telah disimpan.', 'success');
+            } else {
+                // Toast for draft
+                Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Draft disimpan', showConfirmButton: false, timer: 1500 });
+            }
+            navigate(`assess_${type}`); // refresh list
+        }
+
+
+        // --- MOBILE MENU HELPER ---
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        
+        function toggleSidebar(show) {
+            if (show) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+
+        document.getElementById('open-sidebar').addEventListener('click', () => toggleSidebar(true));
+        document.getElementById('close-sidebar').addEventListener('click', () => toggleSidebar(false));
+        overlay.addEventListener('click', () => toggleSidebar(false));
+
+    </script>
+</body>
+</html>
