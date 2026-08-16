@@ -67,6 +67,7 @@ Route::prefix('operator')
 
         Route::get('/assignments', [AssignmentController::class, 'index'])->name('assignments.index');
         Route::post('/assignments', [AssignmentController::class, 'store'])->name('assignments.store');
+        Route::put('/assignments/{id}', [AssignmentController::class, 'update'])->name('assignments.update');
         Route::delete('/assignments/{id}', [AssignmentController::class, 'destroy'])->name('assignments.destroy');
 
         Route::get('/documents', [DocumentController::class, 'index'])->name('documents.index');
@@ -106,11 +107,13 @@ Route::prefix('guru')
 
         Route::get('/groups', [GroupController::class, 'index'])->name('groups.index');
         Route::post('/groups', [GroupController::class, 'store'])->name('groups.store')->middleware('system.open');
+        Route::put('/groups/{id}', [GroupController::class, 'update'])->name('groups.update')->middleware('system.open');
         Route::delete('/groups/{id}', [GroupController::class, 'destroy'])->name('groups.destroy');
 
         // Penilaian IPA + Poster (guru)
         Route::get('/assessments', [GuruAssessment::class, 'index'])->name('assessments.index');
         Route::post('/assessments', [GuruAssessment::class, 'store'])->name('assessments.store');
+        Route::post('/assessments/{id}/rollback', [GuruAssessment::class, 'rollback'])->name('assessments.rollback');
         Route::post('/posters/{posterId}/status', [GuruAssessment::class, 'updatePosterStatus'])->name('posters.status');
 
         // Rekap nilai kelompok — hanya guru yang buat kelompok
@@ -132,6 +135,7 @@ Route::prefix('juri')
         Route::get('/assessments', [JuriAssessment::class, 'index'])->name('assessments.index');
         Route::get('/assessments/{groupId}', [JuriAssessment::class, 'show'])->name('assessments.show');
         Route::post('/assessments/{groupId}', [JuriAssessment::class, 'store'])->name('assessments.store');
+        Route::post('/assessments/{groupId}/rollback', [JuriAssessment::class, 'rollback'])->name('assessments.rollback');
     });
 
 // ─────────────────────────────────────────────────
@@ -144,9 +148,12 @@ Route::prefix('siswa')
     ->group(function () {
         Route::get('/dashboard', [SiswaDashboard::class, 'index'])->name('dashboard');
 
-        // Upload poster (ketua saja, saat sistem open)
+        // Upload poster & Delete poster (ketua saja, saat sistem open)
         Route::post('/poster/upload', [PosterController::class, 'upload'])
             ->name('poster.upload')
+            ->middleware('system.open');
+        Route::delete('/poster/delete', [PosterController::class, 'destroy'])
+            ->name('poster.destroy')
             ->middleware('system.open');
 
         // Metadata produk (ketua saja)
@@ -154,11 +161,17 @@ Route::prefix('siswa')
         Route::post('/product-metadata', [ProductMetadataController::class, 'store'])
             ->name('product_metadata.store')
             ->middleware('system.open');
+        Route::delete('/product-metadata/delete', [ProductMetadataController::class, 'destroy'])
+            ->name('product_metadata.destroy')
+            ->middleware('system.open');
 
         // Kontribusi anggota (ketua saja)
         Route::get('/contribution', [ContributionController::class, 'index'])->name('contribution.index');
         Route::post('/contribution', [ContributionController::class, 'store'])
             ->name('contribution.store')
+            ->middleware('system.open');
+        Route::delete('/contribution/delete', [ContributionController::class, 'destroy'])
+            ->name('contribution.destroy')
             ->middleware('system.open');
     });
 

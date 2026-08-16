@@ -4,11 +4,13 @@
 @section('page-title', 'Dokumentasi & Panduan Projek')
 
 @push('styles')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
 /* Modern Markdown Render Styles */
 .markdown-body {
     word-break: break-word;
     overflow-wrap: break-word;
+    font-size: 0.925rem;
 }
 .markdown-body h1 {
     font-size: 1.65rem;
@@ -53,16 +55,19 @@
 .markdown-body li {
     margin-bottom: 0.4rem;
 }
+/* Responsive Table Styles */
+.table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
 .markdown-body table {
     width: 100%;
+    min-width: 580px;
     border-collapse: collapse;
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
     border-radius: 0.75rem;
-    overflow: hidden;
-    display: block;
-    overflow-x: auto;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 .markdown-body th {
     background-color: #0d9488;
@@ -70,13 +75,18 @@
     font-weight: 600;
     text-align: left;
     padding: 0.75rem 1rem;
-    font-size: 0.875rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
 }
 .markdown-body td {
     padding: 0.75rem 1rem;
     border-bottom: 1px solid #e5e7eb;
-    font-size: 0.875rem;
+    font-size: 0.85rem;
     color: #374151;
+    line-height: 1.5;
+}
+.markdown-body td:first-child, .markdown-body th:first-child {
+    white-space: nowrap;
 }
 .markdown-body tr:nth-child(even) td {
     background-color: #f9fafb;
@@ -130,14 +140,21 @@
             <p class="text-teal-100 text-xs sm:text-sm mt-1 max-w-2xl">Petunjuk Teknis (Juknis), Petunjuk Pelaksanaan (Juklak), Rubrik Penilaian, dan Job Desk Anggota Kelompok.</p>
         </div>
 
-        <div class="flex items-center gap-3 relative z-10 shrink-0 w-full sm:w-auto justify-end">
+        <div class="flex flex-wrap items-center gap-2.5 relative z-10 shrink-0 w-full sm:w-auto justify-end">
             @if(in_array($role, ['operator', 'super_admin']))
                 <a href="{{ route('operator.markdown.edit', $cleanFilename) }}" class="inline-flex items-center gap-2 px-4 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-brand-dark rounded-xl font-bold text-xs transition-colors shadow-md">
                     <i class="ph-bold ph-pencil-simple text-base"></i> Edit Markdown
                 </a>
             @endif
-            <button onclick="window.print()" class="inline-flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl font-semibold text-xs transition-colors border border-white/20">
-                <i class="ph ph-printer text-base"></i> Cetak / PDF
+
+            {{-- Download PDF Button --}}
+            <button onclick="downloadPDF()" class="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold text-xs transition-all shadow-md cursor-pointer">
+                <i class="ph-bold ph-download-simple text-base"></i> Download PDF
+            </button>
+
+            {{-- Print Button --}}
+            <button onclick="window.print()" class="inline-flex items-center gap-2 px-3.5 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl font-semibold text-xs transition-colors border border-white/20">
+                <i class="ph ph-printer text-base"></i> Cetak
             </button>
         </div>
     </div>
@@ -221,8 +238,8 @@
 
 @push('scripts')
 <script>
-// Auto add IDs to headers for Table of Contents smooth scroll anchors
 document.addEventListener("DOMContentLoaded", function() {
+    // Auto add IDs to headers for Table of Contents smooth scroll anchors
     const headings = document.querySelectorAll("#markdownRenderArea h1, #markdownRenderArea h2, #markdownRenderArea h3");
     headings.forEach(function(heading) {
         const textClean = heading.innerText.trim().replace(/[*_`#\\]/g, '');
@@ -234,6 +251,51 @@ document.addEventListener("DOMContentLoaded", function() {
             heading.id = slug;
         }
     });
+
+    // Automatically wrap all Markdown tables in responsive wrappers
+    document.querySelectorAll('#markdownRenderArea table').forEach(function(table) {
+        if (!table.parentElement.classList.contains('table-responsive-wrapper')) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'table-responsive-wrapper overflow-x-auto rounded-xl border border-gray-200 my-4 shadow-sm';
+            table.parentNode.insertBefore(wrapper, table);
+            wrapper.appendChild(table);
+        }
+    });
 });
+
+// Download PDF function using html2pdf.js
+function downloadPDF() {
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            title: 'Menyiapkan PDF...',
+            text: 'Dokumen sedang diproses untuk diunduh.',
+            allowOutsideClick: false,
+            didOpen: () => { Swal.showLoading(); }
+        });
+    }
+
+    const element = document.getElementById('markdownRenderArea');
+    const filenameClean = '{{ Str::slug(pathinfo($cleanFilename, PATHINFO_FILENAME)) }}' || 'panduan-projek-ipa';
+    
+    const opt = {
+        margin:       [10, 10, 10, 10],
+        filename:     filenameClean + '.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, logging: false },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save().then(() => {
+        if (typeof Swal !== 'undefined') {
+            Swal.close();
+        }
+    }).catch(err => {
+        if (typeof Swal !== 'undefined') {
+            Swal.fire('Gagal', 'Gagal membuat file PDF: ' + err.message, 'error');
+        } else {
+            alert('Gagal membuat PDF: ' + err.message);
+        }
+    });
+}
 </script>
 @endpush

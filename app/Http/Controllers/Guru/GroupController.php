@@ -33,6 +33,16 @@ class GroupController extends Controller
                 ->map(function ($group) {
                     $group->leader_data = $group->getLeader();
                     $group->member_count = $group->members->count();
+                    $group->members_data = $group->members->map(function ($member) {
+                        $student = $member->getStudent();
+                        $siswa = $member->getSiswaDetail();
+                        return [
+                            'user_id' => $member->student_user_id,
+                            'nama' => $student?->getDisplayName() ?? 'Unknown',
+                            'nis' => $siswa?->nis ?? '',
+                            'kelas' => $siswa?->kelas?->nama_kelas ?? 'Tanpa Kelas'
+                        ];
+                    })->values()->all();
                     return $group;
                 });
         }
@@ -139,6 +149,95 @@ class GroupController extends Controller
         }
 
         return back()->with('success', "Kelompok '{$request->name}' berhasil dibuat.");
+    }
+
+    /**
+     * Update kelompok + anggota + ketua secara atomic.
+     */
+    public function update(Request $request, int $id)
+    {
+        $request->validate([
+            'name'           => ['required', 'string', 'max:100'],
+            'leader_user_id' => ['required', 'integer'],
+            'member_ids'     => ['required', 'array', 'min:1'],
+            'member_ids.*'   => ['integer'],
+        ], [
+            'name.required'           => 'Nama kelompok wajib diisi.',
+            'leader_user_id.required' => 'Ketua kelompok wajib dipilih.',
+            'member_ids.required'     => 'Minimal satu anggota wajib dipilih.',
+        ]);
+
+        $group = ScfGroup::findOrFail($id);
+
+        if ($group->created_by !== Auth::id()) {
+            abort(403, 'Anda tidak berhak mengedit kelompok ini.');
+        }
+
+        if ($group->isFinalized()) {
+            return back()->with('error', 'Kelompok ini sudah difinalisasi dan tidak dapat diedit.');
+        }
+
+        $program = ScfProgram::getActive();
+        if (!$program) {
+            return back()->with('error', 'Tidak ada program SCF yang aktif.');
+        }
+
+        $leaderUser = User::find($request->leader_user_id);
+        if (!$leaderUser || $leaderUser->getRoleName() !== 'siswa') {
+            return back()->with('error', 'Ketua kelompok harus merupakan siswa.');
+        }
+
+        $memberIds = array_unique($request->member_ids);
+        if (!in_array($request->leader_user_id, $memberIds)) {
+            $memberIds[] = $request->leader_user_id;
+        }
+
+        // Validasi: siswa tidak boleh terdaftar di kelompok lain (selain kelompok ini)
+        $existingMemberUserIds = ScfGroupMember::whereHas('group', function ($q) use ($program, $id) {
+            $q->where('program_id', $program->id)->where('id', '!=', $id);
+        })->whereIn('student_user_id', $memberIds)->pluck('student_user_id')->toArray();
+
+        if (!empty($existingMemberUserIds)) {
+            $names = collect($existingMemberUserIds)->map(function ($id) {
+                $user = User::find($id);
+                return $user?->getDisplayName() ?? "ID:{$id}";
+            })->join(', ');
+
+            return back()->with('error', "Siswa berikut sudah terdaftar di kelompok lain: {$names}");
+        }
+
+        try {
+            DB::connection('scf')->transaction(function () use ($request, $group, $memberIds, $program) {
+                $group->update([
+                    'name'           => $request->name,
+                    'leader_user_id' => $request->leader_user_id,
+                ]);
+
+                // Sync members: delete old, create new
+                ScfGroupMember::where('group_id', $group->id)->delete();
+
+                foreach ($memberIds as $userId) {
+                    ScfGroupMember::create([
+                        'group_id'        => $group->id,
+                        'student_user_id' => $userId,
+                        'created_at'      => now(),
+                    ]);
+                }
+
+                $leaderName = User::find($request->leader_user_id)?->getDisplayName();
+
+                ScfActivityLog::log(
+                    Auth::id(),
+                    'group_updated',
+                    "Guru mengedit kelompok '{$group->name}' dengan ketua {$leaderName}.",
+                    $program->id
+                );
+            });
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan saat mengupdate kelompok.');
+        }
+
+        return back()->with('success', "Kelompok '{$request->name}' berhasil diupdate.");
     }
 
     public function destroy(int $id)
