@@ -3,72 +3,15 @@
 @section('title', 'Panduan Projek IPA')
 @section('page-title', 'Dokumentasi & Panduan Projek')
 
-@section('nav-menu')
-    @php
-        $user = auth()->user();
-        $role = $user ? $user->getScfRole() : 'guest';
-    @endphp
-
-    @if($role === 'operator' || $role === 'super_admin')
-        <a href="{{ route('operator.dashboard') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
-            <i class="ph ph-squares-four text-xl"></i> Dashboard
-        </a>
-        <a href="{{ route('operator.assignments.index') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
-            <i class="ph ph-users-three text-xl"></i> Manajemen Guru & Juri
-        </a>
-        <a href="{{ route('operator.documents.index') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
-            <i class="ph ph-book-open-text text-xl"></i> Juklak & Juknis
-        </a>
-        <a href="{{ route('operator.landing_photos.index') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
-            <i class="ph ph-image text-xl"></i> Foto Landing Page
-        </a>
-        <a href="{{ route('operator.markdown.index') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
-            <i class="ph ph-file-md text-xl"></i> Markdown Panduan
-        </a>
-    @elseif($role === 'guru' || $role === 'guru_unassigned')
-        <a href="{{ route('guru.dashboard') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
-            <i class="ph ph-squares-four text-xl"></i> Dashboard
-        </a>
-        <a href="{{ route('guru.groups.index') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
-            <i class="ph ph-users-three text-xl"></i> Kelompok Pembimbingan
-        </a>
-        <a href="{{ route('guru.assessments.index') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
-            <i class="ph ph-clipboard-text text-xl"></i> Penilaian IPA
-        </a>
-    @elseif($role === 'juri')
-        <a href="{{ route('juri.dashboard') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
-            <i class="ph ph-squares-four text-xl"></i> Dashboard
-        </a>
-        <a href="{{ route('juri.assessments.index') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
-            <i class="ph ph-cooking-pot text-xl"></i> Penilaian Makanan
-        </a>
-    @elseif($role === 'siswa')
-        <a href="{{ route('siswa.dashboard') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
-            <i class="ph ph-squares-four text-xl"></i> Dashboard
-        </a>
-        <a href="{{ route('siswa.product_metadata.index') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
-            <i class="ph ph-info text-xl"></i> Informasi Produk Makanan
-        </a>
-        <a href="{{ route('siswa.contribution.index') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
-            <i class="ph ph-chart-pie-slice text-xl"></i> Kontribusi Anggota
-        </a>
-    @elseif($role === 'kepsek')
-        <a href="{{ route('kepsek.dashboard') }}" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-gray-600 hover:bg-brand-teal-light hover:text-brand-teal font-medium transition-colors">
-            <i class="ph ph-squares-four text-xl"></i> Dashboard Monitoring
-        </a>
-    @endif
-
-    {{-- Active Panduan Item for All Roles --}}
-    <a href="{{ route('panduan.show') }}" class="nav-link active flex items-center gap-3 px-3 py-3 rounded-xl font-medium transition-colors mt-2">
-        <i class="ph ph-book-bookmark text-xl"></i> Panduan Projek IPA
-    </a>
-@endsection
-
 @push('styles')
 <style>
 /* Modern Markdown Render Styles */
+.markdown-body {
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
 .markdown-body h1 {
-    font-size: 1.75rem;
+    font-size: 1.65rem;
     font-weight: 800;
     color: #0f766e;
     border-bottom: 2px solid #ccfbf1;
@@ -77,7 +20,7 @@
     margin-bottom: 1rem;
 }
 .markdown-body h2 {
-    font-size: 1.35rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: #1f2937;
     margin-top: 1.75rem;
@@ -117,6 +60,8 @@
     margin-bottom: 1.5rem;
     border-radius: 0.75rem;
     overflow: hidden;
+    display: block;
+    overflow-x: auto;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 .markdown-body th {
@@ -160,31 +105,35 @@
     overflow-x: auto;
     margin: 1rem 0;
 }
-.markdown-body pre code {
-    background-color: transparent;
-    color: inherit;
-    padding: 0;
+.markdown-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
 }
 </style>
 @endpush
 
 @section('content')
+@php
+    $user = auth()->user();
+    $role = $user ? $user->getScfRole() : 'guest';
+@endphp
 <div class="space-y-6 slide-up">
 
     {{-- Header Banner --}}
-    <div class="bg-gradient-to-r from-brand-teal to-teal-800 text-white rounded-2xl p-6 sm:p-8 shadow-soft flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative overflow-hidden">
+    <div class="bg-gradient-to-r from-brand-teal to-teal-800 text-white rounded-2xl p-5 sm:p-8 shadow-soft flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative overflow-hidden">
         <div class="relative z-10">
             <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold text-teal-100 mb-3">
                 <i class="ph-fill ph-book-open"></i> Master Modul Projek IPA
             </div>
-            <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">Panduan Pelaksanaan Science Food Festival</h2>
-            <p class="text-teal-100 text-sm mt-1 max-w-2xl">Petunjuk Teknis (Juknis), Petunjuk Pelaksanaan (Juklak), Rubrik Penilaian, dan Job Desk Anggota Kelompok.</p>
+            <h2 class="text-xl sm:text-3xl font-black text-white tracking-tight">Panduan Pelaksanaan Science Food Festival</h2>
+            <p class="text-teal-100 text-xs sm:text-sm mt-1 max-w-2xl">Petunjuk Teknis (Juknis), Petunjuk Pelaksanaan (Juklak), Rubrik Penilaian, dan Job Desk Anggota Kelompok.</p>
         </div>
 
-        <div class="flex items-center gap-3 relative z-10 shrink-0">
+        <div class="flex items-center gap-3 relative z-10 shrink-0 w-full sm:w-auto justify-end">
             @if(in_array($role, ['operator', 'super_admin']))
                 <a href="{{ route('operator.markdown.edit', $cleanFilename) }}" class="inline-flex items-center gap-2 px-4 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-brand-dark rounded-xl font-bold text-xs transition-colors shadow-md">
-                    <i class="ph-bold ph-pencil-simple text-base"></i> Edit Markdown (Operator)
+                    <i class="ph-bold ph-pencil-simple text-base"></i> Edit Markdown
                 </a>
             @endif
             <button onclick="window.print()" class="inline-flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl font-semibold text-xs transition-colors border border-white/20">
@@ -193,11 +142,44 @@
         </div>
     </div>
 
-    {{-- Main Grid: Table of Contents + Markdown Content --}}
+    {{-- Mobile Table of Contents Accordion (visible on mobile only) --}}
+    <details class="lg:hidden bg-white rounded-2xl border border-gray-100 shadow-card p-4 group">
+        <summary class="font-bold text-xs uppercase tracking-wider text-gray-800 flex items-center justify-between cursor-pointer select-none">
+            <span class="flex items-center gap-2">
+                <i class="ph ph-list-bullets text-brand-teal text-lg"></i>
+                Daftar Isi / Navigasi Dokumen
+            </span>
+            <i class="ph ph-caret-down text-brand-teal text-base group-open:rotate-180 transition-transform"></i>
+        </summary>
+        <div class="mt-4 pt-3 border-t border-gray-100 space-y-2">
+            @if(count($availableFiles) > 1)
+                <div class="mb-3">
+                    <label class="block text-[11px] font-semibold text-gray-400 uppercase mb-1">Pilih Dokumen</label>
+                    <select onchange="location.href = '/panduan/' + this.value" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-700 focus:border-brand-teal outline-none bg-gray-50">
+                        @foreach($availableFiles as $fname => $label)
+                            <option value="{{ $fname }}" {{ $cleanFilename === $fname ? 'selected' : '' }}>{{ $label }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
+            <nav class="space-y-1 text-xs max-h-60 overflow-y-auto">
+                @forelse($toc as $item)
+                    <a href="#{{ $item['id'] }}" onclick="this.closest('details').removeAttribute('open')"
+                       class="block py-1.5 px-2 rounded-lg transition-colors hover:bg-brand-teal-light hover:text-brand-teal truncate {{ $item['level'] === 1 ? 'font-bold text-gray-800' : ($item['level'] === 2 ? 'font-semibold text-gray-700 pl-3' : 'text-gray-500 pl-5') }}">
+                        {{ $item['title'] }}
+                    </a>
+                @empty
+                    <p class="text-gray-400 text-xs italic">Tidak ada sub-header detected.</p>
+                @endforelse
+            </nav>
+        </div>
+    </details>
+
+    {{-- Main Grid: Desktop Table of Contents + Markdown Content --}}
     <div class="grid lg:grid-cols-4 gap-6 items-start">
 
-        {{-- Sticky Navigation / Table of Contents --}}
-        <div class="lg:col-span-1 bg-white rounded-2xl p-5 border border-gray-100 shadow-card sticky top-6 max-h-[85vh] overflow-y-auto no-scrollbar">
+        {{-- Desktop Sticky Sidebar (visible on lg screens only) --}}
+        <div class="hidden lg:block lg:col-span-1 bg-white rounded-2xl p-5 border border-gray-100 shadow-card sticky top-6 max-h-[85vh] overflow-y-auto no-scrollbar">
             <h4 class="font-bold text-gray-800 text-xs uppercase tracking-wider mb-4 flex items-center gap-2 pb-2 border-b border-gray-100">
                 <i class="ph ph-list-bullets text-brand-teal text-lg"></i> Daftar Isi / Navigasi
             </h4>
@@ -226,7 +208,7 @@
         </div>
 
         {{-- Rendered Content Card --}}
-        <div class="lg:col-span-3 bg-white rounded-2xl p-6 sm:p-10 border border-gray-100 shadow-card overflow-hidden">
+        <div class="lg:col-span-3 bg-white rounded-2xl p-5 sm:p-8 lg:p-10 border border-gray-100 shadow-card overflow-hidden w-full">
             <div id="markdownRenderArea" class="markdown-body">
                 {!! $htmlContent !!}
             </div>
@@ -243,7 +225,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const headings = document.querySelectorAll("#markdownRenderArea h1, #markdownRenderArea h2, #markdownRenderArea h3");
     headings.forEach(function(heading) {
-        const textClean = heading.innerText.trim().replace(/[*_`#]/g, '');
+        const textClean = heading.innerText.trim().replace(/[*_`#\\]/g, '');
         const slug = textClean.toLowerCase()
             .replace(/[^\w\s-]/g, '')
             .replace(/[\s_-]+/g, '-')

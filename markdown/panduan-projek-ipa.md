@@ -6,14 +6,14 @@
 
 ## **I. PETUNJUK TEKNIS (JUKNIS) UMUM**
 
-### **1\. Tujuan Kegiatan**
+### **1. Tujuan Kegiatan**
 
 1. Melatih siswa memahami struktur dan fungsi organ tubuh manusia yang berkaitan dengan sistem pencernaan.  
 2. Membiasakan siswa menerapkan konsep makanan bergizi dan seimbang dalam kehidupan sehari-hari.  
 3. Menumbuhkan kreativitas, kerja sama tim, kepemimpinan, dan rasa percaya diri.  
 4. Memberikan pengalaman belajar berbasis proyek (*Project-Based Learning*) yang selaras dengan nilai-nilai Profil Pelajar Pancasila.
 
-### **2\. Bentuk Kegiatan**
+### **2. Bentuk Kegiatan**
 
 * **Festival & Pameran Makanan Seimbang:** Pameran stan menu bergizi buatan kelompok.  
 * **Presentasi Ilmiah:** Penjelasan materi IPA sistem pencernaan yang dikaitkan dengan menu makanan.  
@@ -21,12 +21,12 @@
 * **Sesi *Food Tasting*:** Mencicipi hidangan oleh tim penilai/juri dan pengunjung.  
 * **Dokumentasi & Publikasi Sederhana:** Pembuatan rekaman media (foto/video) kegiatan.
 
-### **3\. Ketentuan Peserta**
+### **3. Ketentuan Peserta**
 
-* Peserta adalah seluruh siswa kelas 8\.  
+* Peserta adalah seluruh siswa kelas 8.  
 * Siswa dibagi menjadi beberapa kelompok dengan anggota **3 hingga 5 orang per kelompok**.
 
-### **4\. Teknis Kegiatan di Hari-H**
+### **4. Teknis Kegiatan di Hari-H**
 
 | Waktu | Durasi | Agenda Kegiatan | Keterangan |
 | :---- | :---- | :---- | :---- |
@@ -37,7 +37,7 @@
 | **10.00 – 10.30** | 30 menit | Rekap Penilaian & Pengumuman | Pengumuman pemenang kategori penghargaan |
 | **10.30 – 11.00** | 30 menit | Penutup & Operasi Semut | Foto bersama, pembersihan area, dan dokumentasi |
 
-### **5\. Rubrik Penilaian**
+### **5. Rubrik Penilaian**
 
 Penilaian dilakukan oleh Guru Mata Pelajaran IPA beserta Juri Pendamping dengan bobot penilaian sebagai berikut:
 
@@ -82,7 +82,7 @@ Penilaian dilakukan oleh Guru Mata Pelajaran IPA beserta Juri Pendamping dengan 
 2. **Teknis Saji & Kemasan:**  
    * Wajib membawa wadah/piring saji sendiri.  
    * Disarankan menggunakan alas ramah lingkungan (daun pisang, kertas minyak, wadah daur ulang).  
-   * Sertakan **Kartu Informasi Gizi** kecil di samping hidangan (Contoh: *"Nasi \= Karbohidrat, Ayam \= Protein Hewani, Bayam \= Serat & Mineral"*).
+   * Sertakan **Kartu Informasi Gizi** kecil di samping hidangan (Contoh: *"Nasi = Karbohidrat, Ayam = Protein Hewani, Bayam = Serat & Mineral"*).
 
 ### **B. Petunjuk Teknis Poster Edukatif**
 
@@ -106,7 +106,7 @@ Setiap kelompok wajib membagi tugas secara adil. Berikut adalah panduan pembagia
 
 | 5 ANGGOTA | 4 ANGGOTA | 3 ANGGOTA |
 | ----- | ----- | ----- |
-| 1\. Ketua/Koord. 2\. Ahli IPA 3\. Ahli Gizi/Poster 4\. Chef 5\. Presenter Stan | 1\. Ketua & Chef 2\. Ahli IPA 3\. Ahli Gizi & Poster 4\. Presenter Stan & Humas | 1\. Ketua & Penanggung Jawab Menu/Chef 2\. Ahli IPA & Gizi 3\. Desainer Poster & Presenter Stan/Humas |
+| 1. Ketua/Koord. 2. Ahli IPA 3. Ahli Gizi/Poster 4. Chef 5. Presenter Stan | 1. Ketua & Chef 2. Ahli IPA 3. Ahli Gizi & Poster 4. Presenter Stan & Humas | 1. Ketua & Penanggung Jawab Menu/Chef 2. Ahli IPA & Gizi 3. Desainer Poster & Presenter Stan/Humas |
 
 ### **rincian Peran Utama:**
 

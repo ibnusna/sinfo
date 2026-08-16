@@ -37,12 +37,17 @@ class AssessmentController extends Controller
                         ->with('details')
                         ->first();
 
-                    $group->leader_data = $group->getLeader();
+                    $group->leader_data = \App\Models\User::with('siswa.kelas')->find($group->leader_user_id);
                     return $group;
                 });
         }
 
-        return view('juri.assessments.index', compact('program', 'groups', 'criteria'));
+        // Ambil list kelas unik terurut dari kelompok juri
+        $classes = $groups->map(function ($g) {
+            return $g->leader_data?->siswa?->kelas?->nama_kelas ?? null;
+        })->filter()->unique()->sort()->values()->all();
+
+        return view('juri.assessments.index', compact('program', 'groups', 'criteria', 'classes'));
     }
 
     public function show(int $groupId): View

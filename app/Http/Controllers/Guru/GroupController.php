@@ -40,7 +40,22 @@ class GroupController extends Controller
         // Semua siswa dari auth_gara untuk pilihan anggota
         $allStudents = Siswa::with('kelas')->orderBy('nama')->get();
 
-        return view('guru.groups.index', compact('program', 'groups', 'allStudents', 'systemStatus'));
+        // Ambil kelas unik terurut untuk filter
+        $classes = $allStudents->map(function ($s) {
+            return $s->kelas->nama_kelas ?? null;
+        })->filter()->unique()->sort()->values()->all();
+
+        // Siapkan array sederhana siswa untuk JS di blade
+        $allStudentsData = $allStudents->map(function($s) {
+            return [
+                'user_id' => $s->user_id,
+                'nama' => $s->nama,
+                'nis' => $s->nis,
+                'kelas' => $s->kelas->nama_kelas ?? 'Tanpa Kelas'
+            ];
+        })->values()->all();
+
+        return view('guru.groups.index', compact('program', 'groups', 'allStudents', 'systemStatus', 'classes', 'allStudentsData'));
     }
 
     /**

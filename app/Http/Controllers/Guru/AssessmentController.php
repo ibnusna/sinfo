@@ -8,6 +8,7 @@ use App\Models\ScfAssessment;
 use App\Models\ScfAssessmentCriterion;
 use App\Models\ScfAssessmentDetail;
 use App\Models\ScfGroup;
+use App\Models\ScfPoster;
 use App\Models\ScfActivityLog;
 use App\Services\ScfScoreCalculationService;
 use Illuminate\Http\Request;
@@ -54,13 +55,21 @@ class AssessmentController extends Controller
                         ->with('details')
                         ->get();
 
+                    // Load leader data with student and class relation
+                    $group->leader_data = \App\Models\User::with('siswa.kelas')->find($group->leader_user_id);
+
                     return $group;
                 });
         }
 
         $posterCriteria = ScfAssessmentCriterion::getForType('poster', $program?->id);
 
-        return view('guru.assessments.index', compact('program', 'groups', 'criteria', 'posterCriteria'));
+        // Ambil list kelas unik terurut dari kelompok
+        $classes = $groups->map(function ($g) {
+            return $g->leader_data?->siswa?->kelas?->nama_kelas ?? null;
+        })->filter()->unique()->sort()->values()->all();
+
+        return view('guru.assessments.index', compact('program', 'groups', 'criteria', 'posterCriteria', 'classes'));
     }
 
     /**
@@ -137,6 +146,15 @@ class AssessmentController extends Controller
                         'submitted_at' => now(),
                     ]);
 
+                    // Jika penilaian poster disubmit, otomatis tandai poster kelompok sebagai approved jika ada
+                    if ($assessmentType === 'poster' && $group->poster) {
+                        $group->poster->update([
+                            'status'      => 'approved',
+                            'verified_at' => now(),
+                            'verified_by' => $user->id,
+                        ]);
+                    }
+
                     $typeLabel = $assessmentType === 'science' ? 'IPA' : 'Poster';
                     ScfActivityLog::log(
                         $user->id,
@@ -147,10 +165,48 @@ class AssessmentController extends Controller
                 }
             });
         } catch (\Exception $e) {
-            return back()->with('error', 'Terjadi kesalahan saat menyimpan penilaian.');
+            return back()->with('error', 'Terjadi kesalahan saat menyimpan penilaian: ' . $e->getMessage());
         }
 
         $msg = $isSubmit ? 'Penilaian berhasil disubmit.' : 'Draft penilaian berhasil disimpan.';
         return back()->with('success', $msg);
+    }
+
+    /**
+     * Update status poster (approved / revision) oleh guru.
+     */
+    public function updatePosterStatus(Request $request, int $posterId)
+    {
+        $request->validate([
+            'status' => ['required', 'in:approved,revision,submitted'],
+            'note'   => ['nullable', 'string', 'max:500'],
+        ]);
+
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $poster = ScfPoster::with('group')->findOrFail($posterId);
+
+        // Hanya guru yang membuat kelompok yang bisa memverifikasi poster
+        if ($poster->group->created_by !== $user->id) {
+            abort(403, 'Anda tidak berhak memverifikasi poster kelompok ini.');
+        }
+
+        $poster->update([
+            'status'      => $request->status,
+            'verified_at' => now(),
+            'verified_by' => $user->id,
+        ]);
+
+        $statusLabel = $request->status === 'approved' ? 'disetujui' : ($request->status === 'revision' ? 'diminta revisi' : 'diperbarui');
+        $noteText = $request->note ? " Catatan: {$request->note}" : "";
+
+        ScfActivityLog::log(
+            $user->id,
+            'poster_status_updated',
+            "Guru memverifikasi poster kelompok '{$poster->group->name}': {$statusLabel}.{$noteText}",
+            $poster->program_id
+        );
+
+        return back()->with('success', "Status poster kelompok '{$poster->group->name}' berhasil {$statusLabel}.");
     }
 }

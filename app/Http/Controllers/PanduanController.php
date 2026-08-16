@@ -72,8 +72,9 @@ class PanduanController extends Controller
                 $level = strlen($matches[1]);
                 $title = trim(strip_tags($matches[2]));
 
-                // Clean markdown formatting like **bold** or *italic* from TOC titles
-                $titleClean = preg_replace('/[*_`#]/', '', $title);
+                // Clean markdown formatting like **bold**, *italic*, backslashes, etc.
+                $titleClean = preg_replace('/[*_`#\\\\]/', '', $title);
+                $titleClean = trim($titleClean);
                 $id = Str::slug($titleClean);
 
                 if (!empty($titleClean)) {

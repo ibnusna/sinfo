@@ -111,6 +111,7 @@ Route::prefix('guru')
         // Penilaian IPA + Poster (guru)
         Route::get('/assessments', [GuruAssessment::class, 'index'])->name('assessments.index');
         Route::post('/assessments', [GuruAssessment::class, 'store'])->name('assessments.store');
+        Route::post('/posters/{posterId}/status', [GuruAssessment::class, 'updatePosterStatus'])->name('posters.status');
 
         // Rekap nilai kelompok — hanya guru yang buat kelompok
         Route::get('/scores/{groupId}', [GuruScore::class, 'show'])->name('scores.show');
